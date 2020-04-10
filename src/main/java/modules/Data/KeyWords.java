@@ -33,6 +33,8 @@ public class KeyWords {
         singleSigns.put("-", TokenType.Minus);
         singleSigns.put("*", TokenType.Multiply);
         singleSigns.put("/", TokenType.Divide);
+        singleSigns.put(">", TokenType.Greater);
+        singleSigns.put("<", TokenType.Less);
 
         doubleSigns = new HashMap<>();
         doubleSigns.put("==", TokenType.Equality);

@@ -90,6 +90,9 @@ public class Lexer {
         skipWhiteCharacters();
         //analyze EOF
         char sign = reader.peekChar();
+        if(isEndOfFile(sign)) {
+            return new Token(TokenType.EndOfFile);
+        }
 
         if (isStartingKeywordOrIdentifier(sign)) {
             token = getKeywordOrIdentifierToken();
@@ -119,6 +122,10 @@ public class Lexer {
 
     private boolean isStartingDigit(char sign) {
         return Character.isDigit(sign);
+    }
+
+    private boolean isEndOfFile(char sign) {
+        return sign == '\uFFFF';
     }
 
     private Token getKeywordOrIdentifierToken() throws IOException {
@@ -158,10 +165,10 @@ public class Lexer {
     }
 
     private Token getOtherToken() throws IOException, InvalidToken {
-        char firstSign = reader.getNextChar();
+        String firstSign = Character.toString(reader.getNextChar());
         int tokenBeginSignPosition = reader.getSignPosition();
-        char secondSign = reader.peekChar();
-        String twoSigns = Character.toString(firstSign) + Character.toString(secondSign);
+        String secondSign = Character.toString(reader.peekChar());
+        String twoSigns = firstSign + secondSign;
         if (KeyWords.doubleSigns.containsKey(twoSigns)) {
             return new Token(KeyWords.doubleSigns.get(twoSigns));
         } else if (KeyWords.singleSigns.containsKey(firstSign)) {

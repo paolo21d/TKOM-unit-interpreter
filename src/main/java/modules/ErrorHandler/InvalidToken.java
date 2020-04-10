@@ -10,4 +10,9 @@ public class InvalidToken extends Exception {
     private String invalidText;
     private int lineNumber;
     private int signPosition;
+
+    @Override
+    public String getMessage() {
+        return String.format("Invalid token: %s\nLine number %d Position %d\nLine: %s", invalidText, lineNumber, signPosition, lineContent);
+    }
 }

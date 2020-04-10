@@ -28,7 +28,6 @@ public enum TokenType {
     Divide,
     Identifier,
     NumberLiteral,
-    EndOfLine,
-    Invalid,
+    EndOfFile,
     VariableType
 }
