@@ -21,4 +21,17 @@ public class Token {
         this.type = type;
         this.literalNumber = literalNumber;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(super.toString());
+        builder.append(" TokenType: ").append(type.toString());
+        if (type.equals(TokenType.NumberLiteral)) {
+            builder.append(" LiteralNumber: ").append(literalNumber);
+        } else if (type.equals(TokenType.Identifier)) {
+            builder.append(" Value: ").append(value);
+        }
+        return builder.toString();
+    }
 }

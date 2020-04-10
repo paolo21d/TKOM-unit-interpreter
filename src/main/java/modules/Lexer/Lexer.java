@@ -30,7 +30,7 @@ public class Lexer {
 
         if (isStartingKeywordOrIdentifier(sign)) {
             token = getKeywordOrIdentifierToken();
-        } else if (isStartingDigit(sign)) {
+        } else if (isStartingNumber(sign)) {
             token = getNumberToken();
         } else {
             token = getOtherToken();
@@ -54,7 +54,7 @@ public class Lexer {
         return Character.isLetter(sign) || sign == '_';
     }
 
-    private boolean isStartingDigit(char sign) {
+    private boolean isStartingNumber(char sign) {
         return Character.isDigit(sign);
     }
 
@@ -74,7 +74,7 @@ public class Lexer {
         if (KeyWords.keywords.containsKey(word)) {
             return new Token(KeyWords.keywords.get(word));
         } else if (KeyWords.variableTypes.containsKey(word)) {
-            return new Token(KeyWords.variableTypes.get(word), word);
+            return new Token(KeyWords.variableTypes.get(word));
         } else { //identifier
             return new Token(TokenType.Identifier, word);
         }
@@ -108,6 +108,7 @@ public class Lexer {
         } else if (KeyWords.singleSigns.containsKey(firstSign)) {
             return new Token(KeyWords.singleSigns.get(firstSign));
         } else {
+            reader.getNextChar(); //consume second sign
             throw new InvalidToken(reader.getCurrentLine(), twoSigns, reader.getLineNumber(), tokenBeginSignPosition);
         }
     }
