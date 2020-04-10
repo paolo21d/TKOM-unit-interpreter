@@ -1,4 +1,4 @@
-package modules.Reader;
+package modules.InputManager;
 
 import lombok.Getter;
 

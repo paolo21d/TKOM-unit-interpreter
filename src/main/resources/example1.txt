@@ -1,9 +1,9 @@
 function KILO max(KILO unit1, KILO unit2) {
 	if(unit1 > unit2) {
 		return unit1;
-} else {
-	return unit2;
-}
+    } else {
+	    return unit2;
+    }
 }
 
 function INTEGER main() {
