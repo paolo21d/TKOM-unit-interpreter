@@ -8,7 +8,8 @@ import java.util.Map;
 @Data
 public class KeyWords {
     public static Map<String, TokenType> keywords;
-    public static Map<String, TokenType> definedSigns;
+    public static Map<String, TokenType> singleSigns;
+    public static Map<String, TokenType> doubleSigns;
     public static Map<String, TokenType> variableTypes;
 
     static {
@@ -19,19 +20,27 @@ public class KeyWords {
         keywords.put("while", TokenType.While);
         keywords.put("return", TokenType.Return);
 
-        definedSigns = new HashMap<>();
-        definedSigns.put("(", TokenType.ParenthOpen);
-        definedSigns.put(")", TokenType.ParenthClose);
-        definedSigns.put("{", TokenType.BracketOpen);
-        definedSigns.put("}", TokenType.BracketClose);
-        definedSigns.put(",", TokenType.Comma);
-        definedSigns.put(";", TokenType.Semicolon);
-        definedSigns.put("!", TokenType.Negation);
-        definedSigns.put("=", TokenType.Assignment);
-        definedSigns.put("+", TokenType.Plus);
-        definedSigns.put("-", TokenType.Minus);
-        definedSigns.put("*", TokenType.Multiply);
-        definedSigns.put("/", TokenType.Divide);
+        singleSigns = new HashMap<>();
+        singleSigns.put("(", TokenType.ParenthOpen);
+        singleSigns.put(")", TokenType.ParenthClose);
+        singleSigns.put("{", TokenType.BracketOpen);
+        singleSigns.put("}", TokenType.BracketClose);
+        singleSigns.put(",", TokenType.Comma);
+        singleSigns.put(";", TokenType.Semicolon);
+        singleSigns.put("!", TokenType.Negation);
+        singleSigns.put("=", TokenType.Assignment);
+        singleSigns.put("+", TokenType.Plus);
+        singleSigns.put("-", TokenType.Minus);
+        singleSigns.put("*", TokenType.Multiply);
+        singleSigns.put("/", TokenType.Divide);
+
+        doubleSigns = new HashMap<>();
+        doubleSigns.put("==", TokenType.Equality);
+        doubleSigns.put("<=", TokenType.LessOrEqual);
+        doubleSigns.put(">=", TokenType.GreaterOrEqual);
+        doubleSigns.put("!=", TokenType.Inequality);
+        doubleSigns.put("&&", TokenType.And);
+        doubleSigns.put("||", TokenType.Or);
 
         variableTypes = new HashMap<>();
         variableTypes.put("kilo", TokenType.VariableType);
