@@ -16,6 +16,13 @@ public class InputManagerTest {
     }
 
     @Test
+    public void checkEOF() throws IOException {
+        InputManager input = new InputManager(new StringReader(""));
+        assertEquals('\uFFFF', input.getNextChar());
+        assertEquals('\uFFFF', input.getNextChar());
+    }
+
+    @Test
     public void checkNextChar() throws IOException {
         String value = "AB C\nDEF\n GH ";
         InputManager input = new InputManager(new StringReader(value));

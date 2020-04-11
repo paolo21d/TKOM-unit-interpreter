@@ -74,7 +74,7 @@ public class Lexer {
         if (KeyWords.keywords.containsKey(word)) {
             return new Token(KeyWords.keywords.get(word));
         } else if (KeyWords.variableTypes.containsKey(word)) {
-            return new Token(KeyWords.variableTypes.get(word));
+            return new Token(KeyWords.variableTypes.get(word), word);
         } else { //identifier
             return new Token(TokenType.Identifier, word);
         }

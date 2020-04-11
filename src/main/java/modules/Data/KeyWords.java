@@ -2,8 +2,8 @@ package modules.Data;
 
 import lombok.Data;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Data
 public class KeyWords {
@@ -13,14 +13,14 @@ public class KeyWords {
     public static Map<String, TokenType> variableTypes;
 
     static {
-        keywords = new HashMap<>();
+        keywords = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         keywords.put("function", TokenType.Function);
         keywords.put("if", TokenType.If);
         keywords.put("else", TokenType.Else);
         keywords.put("while", TokenType.While);
         keywords.put("return", TokenType.Return);
 
-        singleSigns = new HashMap<>();
+        singleSigns = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         singleSigns.put("(", TokenType.ParenthOpen);
         singleSigns.put(")", TokenType.ParenthClose);
         singleSigns.put("{", TokenType.BracketOpen);
@@ -36,7 +36,7 @@ public class KeyWords {
         singleSigns.put(">", TokenType.Greater);
         singleSigns.put("<", TokenType.Less);
 
-        doubleSigns = new HashMap<>();
+        doubleSigns = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         doubleSigns.put("==", TokenType.Equality);
         doubleSigns.put("<=", TokenType.LessOrEqual);
         doubleSigns.put(">=", TokenType.GreaterOrEqual);
@@ -44,7 +44,7 @@ public class KeyWords {
         doubleSigns.put("&&", TokenType.And);
         doubleSigns.put("||", TokenType.Or);
 
-        variableTypes = new HashMap<>();
+        variableTypes = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         variableTypes.put("kilo", TokenType.VariableType);
         variableTypes.put("mili", TokenType.VariableType);
         variableTypes.put("centy", TokenType.VariableType);

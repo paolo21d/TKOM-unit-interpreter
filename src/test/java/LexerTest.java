@@ -1,3 +1,4 @@
+import modules.Data.KeyWords;
 import modules.Data.Token;
 import modules.Data.TokenType;
 import modules.ErrorHandler.InvalidLiteralNumber;
@@ -19,6 +20,7 @@ public class LexerTest {
     @Test
     public void emptyInput() throws IOException, InvalidToken {
         Lexer lexer = new Lexer(new StringReader(""));
+        assertEquals(TokenType.EndOfFile, lexer.readNextToken().getType());
         assertEquals(TokenType.EndOfFile, lexer.readNextToken().getType());
     }
 
@@ -70,4 +72,21 @@ public class LexerTest {
         }
     }
 
+    @Test
+    public void checkNewVariableTypes() throws IOException, InvalidToken {
+        List<String> newVariableTypes = new ArrayList<>(Arrays.asList("long", "newType1", "new_type_"));
+        StringBuilder builder = new StringBuilder();
+        for (String newVariableType : newVariableTypes) {
+            KeyWords.addVariableType(newVariableType);
+            builder.append(newVariableType).append(" ");
+        }
+
+        Lexer lexer = new Lexer(new StringReader(builder.toString()));
+        for (String newVariableType : newVariableTypes) {
+            Token token = lexer.readNextToken();
+            assertEquals(TokenType.VariableType, token.getType());
+            assertEquals(newVariableType, token.getValue());
+        }
+
+    }
 }
