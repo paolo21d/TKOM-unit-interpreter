@@ -1,0 +1,3 @@
+function INTEGER main() {
+	return 0;
+}
