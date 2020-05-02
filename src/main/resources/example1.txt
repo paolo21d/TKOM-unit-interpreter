@@ -1,0 +1,16 @@
+function KILO max(KILO unit1, KILO unit2) {
+	if(unit1 > unit2) {
+		return unit1;
+    } else {
+	    return unit2;
+    }
+}
+
+function INTEGER main() {
+	KILO smallUnit = 10;
+	MEGA bigUnit = 1;
+	KILO result = max(smallUnit, bigUnit);
+	print(result);
+	long variable = 10;
+	return 0;
+}
