@@ -1,4 +1,4 @@
-import modules.InputManager.InputManager;
+import modules.inputManager.InputManager;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;

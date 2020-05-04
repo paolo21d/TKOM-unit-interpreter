@@ -1,12 +1,12 @@
-package modules.Lexer;
+package modules.lexer;
 
 import lombok.Getter;
-import modules.Data.KeyWords;
-import modules.Data.Token;
-import modules.Data.TokenType;
-import modules.ErrorHandler.InvalidLiteralNumber;
-import modules.ErrorHandler.InvalidToken;
-import modules.InputManager.InputManager;
+import modules.data.KeyWords;
+import modules.data.Token;
+import modules.data.TokenType;
+import modules.errorHandler.InvalidLiteralNumber;
+import modules.errorHandler.InvalidToken;
+import modules.inputManager.InputManager;
 
 import java.io.IOException;
 import java.io.Reader;

@@ -1,7 +1,7 @@
-import modules.Data.KeyWords;
-import modules.Data.TokenType;
-import modules.ErrorHandler.InvalidToken;
-import modules.Lexer.Lexer;
+import modules.data.KeyWords;
+import modules.data.TokenType;
+import modules.errorHandler.InvalidToken;
+import modules.lexer.Lexer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package modules.ErrorHandler;
+package modules.errorHandler;
 
 
 public class InvalidLiteralNumber extends InvalidToken {

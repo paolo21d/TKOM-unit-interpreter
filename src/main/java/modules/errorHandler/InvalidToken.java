@@ -1,4 +1,4 @@
-package modules.ErrorHandler;
+package modules.errorHandler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
