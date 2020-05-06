@@ -25,7 +25,7 @@ public class Lexer {
 
         char sign = reader.peekChar();
         if (isEndOfFile(sign)) {
-            return new Token(TokenType.EndOfFile);
+            return new Token(TokenType.EndOfFile, reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
         }
 
         if (isStartingKeywordOrIdentifier(sign)) {
@@ -72,11 +72,11 @@ public class Lexer {
         String word = buffer.toString();
 
         if (KeyWords.keywords.containsKey(word)) {
-            return new Token(KeyWords.keywords.get(word));
+            return new Token(KeyWords.keywords.get(word), reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
         } else if (KeyWords.variableTypes.containsKey(word)) {
-            return new Token(KeyWords.variableTypes.get(word), word);
+            return new Token(KeyWords.variableTypes.get(word), word, reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
         } else { //identifier
-            return new Token(TokenType.Identifier, word);
+            return new Token(TokenType.Identifier, word, reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
         }
     }
 
@@ -95,7 +95,7 @@ public class Lexer {
         } catch (NumberFormatException exception) {
             throw new InvalidLiteralNumber(reader.getCurrentLine(), word, reader.getLineNumber(), tokenBeginSignPosition);
         }
-        return new Token(TokenType.NumberLiteral, number);
+        return new Token(TokenType.NumberLiteral, number, reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
     }
 
     private Token getOtherToken() throws IOException, InvalidToken {
@@ -104,9 +104,9 @@ public class Lexer {
         String secondSign = Character.toString(reader.peekChar());
         String twoSigns = firstSign + secondSign;
         if (KeyWords.doubleSigns.containsKey(twoSigns)) {
-            return new Token(KeyWords.doubleSigns.get(twoSigns));
+            return new Token(KeyWords.doubleSigns.get(twoSigns), reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
         } else if (KeyWords.singleSigns.containsKey(firstSign)) {
-            return new Token(KeyWords.singleSigns.get(firstSign));
+            return new Token(KeyWords.singleSigns.get(firstSign), reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
         } else {
             reader.getNextChar(); //consume second sign
             throw new InvalidToken(reader.getCurrentLine(), twoSigns, reader.getLineNumber(), tokenBeginSignPosition);

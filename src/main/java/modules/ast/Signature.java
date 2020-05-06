@@ -7,7 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Signature {
-    private String type;
-    private String identifier;
+public class Signature {
+    protected String type;
+    protected String identifier;
+
+    public void setSignature(Signature signature) {
+        this.type = signature.getType();
+        this.identifier = signature.getIdentifier();
+    }
 }

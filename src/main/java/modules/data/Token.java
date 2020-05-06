@@ -7,19 +7,31 @@ public class Token {
     private TokenType type;
     private String value;
     private Double literalNumber;
+    private int lineNumber;
+    private int signPosition;
+    private String lineContent;
 
-    public Token(TokenType type) {
+    public Token(TokenType type, int lineNumber, int signPosition, String lineContent) {
         this.type = type;
+        this.lineNumber = lineNumber;
+        this.signPosition = signPosition;
+        this.lineContent = lineContent;
     }
 
-    public Token(TokenType type, String value) {
+    public Token(TokenType type, String value, int lineNumber, int signPosition, String lineContent) {
         this.type = type;
         this.value = value;
+        this.lineNumber = lineNumber;
+        this.signPosition = signPosition;
+        this.lineContent = lineContent;
     }
 
-    public Token(TokenType type, Double literalNumber) {
+    public Token(TokenType type, Double literalNumber, int lineNumber, int signPosition, String lineContent) {
         this.type = type;
         this.literalNumber = literalNumber;
+        this.lineNumber = lineNumber;
+        this.signPosition = signPosition;
+        this.lineContent = lineContent;
     }
 
     @Override

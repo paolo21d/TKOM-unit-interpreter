@@ -30,4 +30,9 @@ public class FunctionDef extends Signature implements Node {
     public NodeType getNodeType() {
         return NodeType.FUNCTION_DEF;
     }
+
+/*    public void setSignature(Signature signature) {
+        this.type = signature.getType();
+        this.identifier = signature.getIdentifier();
+    }*/
 }
