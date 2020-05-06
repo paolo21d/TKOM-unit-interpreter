@@ -5,8 +5,8 @@ import modules.errorHandler.UnexpectedTokenException;
 import modules.lexer.Lexer;
 import modules.parser.Parser;
 
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
 
 public class Main {
     public static void main(String[] args) throws IOException, InvalidTokenException, UnexpectedTokenException {
@@ -25,7 +25,8 @@ public class Main {
             token = lexer.readNextToken();
         }*/
 
-        Parser parser = new Parser(new Lexer(new StringReader("function INTEGER main() { return 0.0; }")));
+//        Parser parser = new Parser(new Lexer(new StringReader("function INTEGER main() { return 0.0; }")));
+        Parser parser = new Parser(new Lexer(new FileReader("src/main/resources/example1.txt")));
         Program program = parser.parseProgram();
         System.out.println(program);
     }

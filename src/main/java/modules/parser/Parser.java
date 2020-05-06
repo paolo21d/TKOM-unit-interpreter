@@ -39,6 +39,7 @@ public class Parser {
             throw new UnexpectedTokenException(
                     peekedToken.getLineNumber(),
                     peekedToken.getSignPosition(),
+                    peekedToken.getLineContent(),
                     new ArrayList<>(Arrays.asList(TokenType.Function, TokenType.EndOfFile)),
                     peekedToken.getType()
             );
@@ -97,6 +98,7 @@ public class Parser {
             throw new UnexpectedTokenException(
                     token.getLineNumber(),
                     token.getSignPosition(),
+                    token.getLineContent(),
                     expectedTokenType,
                     token.getType()
             );
@@ -143,6 +145,7 @@ public class Parser {
                     throw new UnexpectedTokenException(
                             peekToken().getLineNumber(),
                             peekToken().getSignPosition(),
+                            peekToken().getLineContent(),
                             TokenType.VariableType,
                             peekToken().getType()
                     );
@@ -181,6 +184,7 @@ public class Parser {
                 throw new UnexpectedTokenException(
                         peekToken().getLineNumber(),
                         peekToken().getSignPosition(),
+                        peekToken().getLineContent(),
                         TokenAttributes.statementTypes,
                         peekToken().getType()
                 );
@@ -191,6 +195,7 @@ public class Parser {
         InitStatement statement = new InitStatement();
         statement.setSignature(parseSignature());
         if (peekToken().getType().equals(TokenType.Assignment)) {
+            getCheckedNextTokenType(TokenType.Assignment);
             statement.setAssignable(parseExpression());
         }
         getCheckedNextTokenType(TokenType.Semicolon);
@@ -209,6 +214,7 @@ public class Parser {
             throw new UnexpectedTokenException(
                     peekToken().getLineNumber(),
                     peekToken().getSignPosition(),
+                    peekToken().getLineContent(),
                     TokenAttributes.statementTypes,
                     peekToken().getType()
             );
@@ -234,6 +240,7 @@ public class Parser {
                     throw new UnexpectedTokenException(
                             peekToken().getLineNumber(),
                             peekToken().getSignPosition(),
+                            peekToken().getLineContent(),
                             TokenType.VariableType, //TODO cos innego tutaj powinno byc - pomyslec
                             peekToken().getType()
                     );
@@ -394,6 +401,7 @@ public class Parser {
                 throw new UnexpectedTokenException(
                         peekToken().getLineNumber(),
                         peekToken().getSignPosition(),
+                        peekToken().getLineContent(),
                         new ArrayList<>(Arrays.asList(TokenType.ParenthOpen, TokenType.NumberLiteral, TokenType.Identifier)),
                         peekToken().getType()
                 );

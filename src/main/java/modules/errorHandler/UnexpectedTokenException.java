@@ -8,19 +8,21 @@ public class UnexpectedTokenException extends Exception { //TODO dodać lineCone
 
     public UnexpectedTokenException(int line,
                                     int position,
+                                    String lineContent,
                                     TokenType expectedTokenType,
                                     TokenType providedTokenType) {
-        super(String.format("Unexpected token at line %d position %d. " +
+        super(String.format("Unexpected token at line %d position %d. Line content: %s\n" +
                         "Expected token type %s provided token %s",
-                        line, position, expectedTokenType, providedTokenType));
+                        line, position, lineContent, expectedTokenType, providedTokenType));
     }
 
     public UnexpectedTokenException(int line,
                                     int position,
+                                    String lineContent,
                                     List<TokenType> expectedTokenTypes,
                                     TokenType providedTokenType) {
-        super(String.format("Unexpected token at line %d position %d. " +
+        super(String.format("Unexpected token at line %d position %d. Line content: %s\n" +
                         "Expected token types %s provided token %s",
-                line, position, expectedTokenTypes.toString(), providedTokenType));
+                line, position, lineContent, expectedTokenTypes.toString(), providedTokenType));
     }
 }
