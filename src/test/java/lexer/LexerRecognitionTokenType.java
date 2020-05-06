@@ -1,6 +1,8 @@
+package lexer;
+
 import modules.data.KeyWords;
 import modules.data.TokenType;
-import modules.errorHandler.InvalidToken;
+import modules.errorHandler.InvalidTokenException;
 import modules.lexer.Lexer;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +52,7 @@ public class LexerRecognitionTokenType {
     }
 
     @Test
-    public void testLexerRecognitionTokenType() throws IOException, InvalidToken {
+    public void testLexerRecognitionTokenType() throws IOException, InvalidTokenException {
         assertEquals(expectedTokenType, lexer.readNextToken().getType());
     }
 }

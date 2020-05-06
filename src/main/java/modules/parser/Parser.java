@@ -14,7 +14,7 @@ import modules.ast.statement.*;
 import modules.data.Token;
 import modules.data.TokenAttributes;
 import modules.data.TokenType;
-import modules.errorHandler.InvalidToken;
+import modules.errorHandler.InvalidTokenException;
 import modules.errorHandler.UnexpectedTokenException;
 import modules.lexer.Lexer;
 
@@ -29,7 +29,7 @@ public class Parser {
     private Lexer lexer;
     private boolean isBufferedToken = false;
 
-    public Program parseProgram() throws IOException, InvalidToken, UnexpectedTokenException {
+    public Program parseProgram() throws IOException, InvalidTokenException, UnexpectedTokenException {
         Program program = new Program();
         while (peekToken().getType().equals(TokenType.Function)) {
             program.addFunction(parseFunctionDef());
@@ -71,7 +71,7 @@ public class Parser {
                 return currentToken();
             }
         }*/
-    Token getNextToken() throws IOException, InvalidToken {
+    Token getNextToken() throws IOException, InvalidTokenException {
         if (isBufferedToken) {
             isBufferedToken = false;
             return lexer.getToken();
@@ -80,7 +80,7 @@ public class Parser {
         }
     }
 
-    Token peekToken() throws IOException, InvalidToken {
+    Token peekToken() throws IOException, InvalidTokenException {
         if (isBufferedToken) {
             return lexer.getToken();
         } else {
@@ -89,7 +89,7 @@ public class Parser {
         }
     }
 
-    Token getCheckedNextTokenType(TokenType expectedTokenType) throws IOException, InvalidToken, UnexpectedTokenException {
+    Token getCheckedNextTokenType(TokenType expectedTokenType) throws IOException, InvalidTokenException, UnexpectedTokenException {
         Token token = getNextToken();
         if (token.getType().equals(expectedTokenType)) {
             return token;
@@ -103,7 +103,7 @@ public class Parser {
         }
     }
 
-    FunctionDef parseFunctionDef() throws UnexpectedTokenException, InvalidToken, IOException {
+    FunctionDef parseFunctionDef() throws UnexpectedTokenException, InvalidTokenException, IOException {
         FunctionDef functionDef = new FunctionDef();
         getCheckedNextTokenType(TokenType.Function);
         functionDef.setSignature(parseSignature());
@@ -113,7 +113,7 @@ public class Parser {
     }
 
 
-    Signature parseSignature() throws IOException, InvalidToken, UnexpectedTokenException {
+    Signature parseSignature() throws IOException, InvalidTokenException, UnexpectedTokenException {
         Signature signature = new Signature();
 /*        Token peekedToken = peekToken();
         if (peekedToken.getType().equals(TokenType.VariableType)) {
@@ -132,7 +132,7 @@ public class Parser {
         return signature;
     }
 
-    List<Signature> parseParameters() throws UnexpectedTokenException, InvalidToken, IOException {
+    List<Signature> parseParameters() throws UnexpectedTokenException, InvalidTokenException, IOException {
         List<Signature> parameters = new ArrayList<>();
         getCheckedNextTokenType(TokenType.ParenthOpen);
         while (!peekToken().getType().equals(TokenType.ParenthClose)) {
@@ -153,7 +153,7 @@ public class Parser {
         return parameters;
     }
 
-    Block parseBlock() throws UnexpectedTokenException, InvalidToken, IOException {
+    Block parseBlock() throws UnexpectedTokenException, InvalidTokenException, IOException {
         Block block = new Block();
         getCheckedNextTokenType(TokenType.BracketOpen);
         while (!peekToken().getType().equals(TokenType.BracketClose)) {
@@ -163,7 +163,7 @@ public class Parser {
         return block;
     }
 
-    Statement parseStatement() throws IOException, InvalidToken, UnexpectedTokenException {
+    Statement parseStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
         switch (peekToken().getType()) {
             case VariableType:
                 return parseInitStatement();
@@ -187,7 +187,7 @@ public class Parser {
         }
     }
 
-    Statement parseInitStatement() throws UnexpectedTokenException, InvalidToken, IOException {
+    Statement parseInitStatement() throws UnexpectedTokenException, InvalidTokenException, IOException {
         InitStatement statement = new InitStatement();
         statement.setSignature(parseSignature());
         if (peekToken().getType().equals(TokenType.Assignment)) {
@@ -197,7 +197,7 @@ public class Parser {
         return statement;
     }
 
-    Statement parseAssignmentOrFunctionCallStatement() throws UnexpectedTokenException, InvalidToken, IOException {
+    Statement parseAssignmentOrFunctionCallStatement() throws UnexpectedTokenException, InvalidTokenException, IOException {
         String identifier = getCheckedNextTokenType(TokenType.Identifier).getValue();
         if (peekToken().getType().equals(TokenType.Assignment)) {
             return parseAssignmentStatement(identifier);
@@ -215,7 +215,7 @@ public class Parser {
         }
     }
 
-    Statement parseAssignmentStatement(String identifier) throws UnexpectedTokenException, InvalidToken, IOException {
+    Statement parseAssignmentStatement(String identifier) throws UnexpectedTokenException, InvalidTokenException, IOException {
         AssignmentStatement statement = new AssignmentStatement();
         statement.setIdentifier(identifier);
         statement.setAssignable(parseExpression());
@@ -223,7 +223,7 @@ public class Parser {
         return statement;
     }
 
-    FunctionCall parseFunctionCallStatement(String identifier) throws UnexpectedTokenException, InvalidToken, IOException {
+    FunctionCall parseFunctionCallStatement(String identifier) throws UnexpectedTokenException, InvalidTokenException, IOException {
         FunctionCall statement = new FunctionCall(identifier);
         getCheckedNextTokenType(TokenType.ParenthOpen);
         while (!peekToken().getType().equals(TokenType.ParenthClose)) {
@@ -244,7 +244,7 @@ public class Parser {
         return statement;
     }
 
-    Statement parseIfStatement() throws UnexpectedTokenException, InvalidToken, IOException {
+    Statement parseIfStatement() throws UnexpectedTokenException, InvalidTokenException, IOException {
         IfStatement statement = new IfStatement();
         getCheckedNextTokenType(TokenType.If);
         getCheckedNextTokenType(TokenType.ParenthOpen);
@@ -259,7 +259,7 @@ public class Parser {
         return statement;
     }
 
-    Statement parseWhileStatement() throws UnexpectedTokenException, InvalidToken, IOException {
+    Statement parseWhileStatement() throws UnexpectedTokenException, InvalidTokenException, IOException {
         WhileStatement statement = new WhileStatement();
         getCheckedNextTokenType(TokenType.While);
         getCheckedNextTokenType(TokenType.ParenthOpen);
@@ -270,7 +270,7 @@ public class Parser {
         return statement;
     }
 
-    Statement parseSingleLineOrBlockStatement() throws IOException, InvalidToken, UnexpectedTokenException {
+    Statement parseSingleLineOrBlockStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
         if (peekToken().getType().equals(TokenType.BracketOpen)) {
             return parseBlock();
         } else {
@@ -278,7 +278,7 @@ public class Parser {
         }
     }
 
-    Statement parseReturnStatement() throws UnexpectedTokenException, InvalidToken, IOException {
+    Statement parseReturnStatement() throws UnexpectedTokenException, InvalidTokenException, IOException {
         ReturnStatement statement = new ReturnStatement();
         getCheckedNextTokenType(TokenType.Return);
         statement.setReturnedExpression(parseExpression());
@@ -286,7 +286,7 @@ public class Parser {
         return statement;
     }
 
-    Condition parseCondition() throws IOException, InvalidToken, UnexpectedTokenException {
+    Condition parseCondition() throws IOException, InvalidTokenException, UnexpectedTokenException {
         Condition condition = new Condition();
         condition.addOperand(parseAndCondition());
 
@@ -297,7 +297,7 @@ public class Parser {
         return condition;
     }
 
-    Condition parseAndCondition() throws IOException, InvalidToken, UnexpectedTokenException {
+    Condition parseAndCondition() throws IOException, InvalidTokenException, UnexpectedTokenException {
         Condition condition = new Condition();
         condition.addOperand(parseEqualityCondition());
 
@@ -308,7 +308,7 @@ public class Parser {
         return condition;
     }
 
-    Condition parseEqualityCondition() throws IOException, InvalidToken, UnexpectedTokenException {
+    Condition parseEqualityCondition() throws IOException, InvalidTokenException, UnexpectedTokenException {
         Condition condition = new Condition();
         condition.addOperand(parseRelationalCondition());
 
@@ -319,7 +319,7 @@ public class Parser {
         return condition;
     }
 
-    Condition parseRelationalCondition() throws IOException, InvalidToken, UnexpectedTokenException {
+    Condition parseRelationalCondition() throws IOException, InvalidTokenException, UnexpectedTokenException {
         Condition condition = new Condition();
         condition.addOperand(parseBaseCondition());
 
@@ -331,7 +331,7 @@ public class Parser {
         return condition;
     }
 
-    Condition parseBaseCondition() throws IOException, InvalidToken, UnexpectedTokenException {
+    Condition parseBaseCondition() throws IOException, InvalidTokenException, UnexpectedTokenException {
         Condition condition = new Condition();
         if (peekToken().getType().equals(TokenType.Negation)) {
             getNextToken();
@@ -348,7 +348,7 @@ public class Parser {
         return condition;
     }
 
-    ExpressionNode parseExpression() throws IOException, InvalidToken, UnexpectedTokenException {
+    ExpressionNode parseExpression() throws IOException, InvalidTokenException, UnexpectedTokenException {
         ExpressionNode expression = new ExpressionNode();
         expression.addOperand(parseMultiplicativeExpression());
 
@@ -359,7 +359,7 @@ public class Parser {
         return expression;
     }
 
-    Expression parseMultiplicativeExpression() throws IOException, InvalidToken, UnexpectedTokenException {
+    Expression parseMultiplicativeExpression() throws IOException, InvalidTokenException, UnexpectedTokenException {
         ExpressionNode expression = new ExpressionNode();
         expression.addOperand(parsePrimaryExpression());
 
@@ -370,7 +370,7 @@ public class Parser {
         return expression;
     }
 
-    Expression parsePrimaryExpression() throws IOException, InvalidToken, UnexpectedTokenException {
+    Expression parsePrimaryExpression() throws IOException, InvalidTokenException, UnexpectedTokenException {
         switch (peekToken().getType()) {
             case Minus:
             case NumberLiteral:
@@ -401,13 +401,13 @@ public class Parser {
         }
     }
 
-    Expression parseLiteral() throws IOException, InvalidToken, UnexpectedTokenException { //TODO moze rozdzielic na IntegerNode i DoubleNode???
+    Expression parseLiteral() throws IOException, InvalidTokenException, UnexpectedTokenException { //TODO moze rozdzielic na IntegerNode i DoubleNode???
         int signValue = getSignValue();
         double numberValue = getCheckedNextTokenType(TokenType.NumberLiteral).getLiteralNumber();
         return new DoubleNode(numberValue * signValue);
     }
 
-    int getSignValue() throws IOException, InvalidToken {
+    int getSignValue() throws IOException, InvalidTokenException {
         if (peekToken().getType().equals(TokenType.Minus)) {
             getNextToken();
             return -1;

@@ -1,8 +1,10 @@
+package lexer;
+
 import modules.data.KeyWords;
 import modules.data.Token;
 import modules.data.TokenType;
-import modules.errorHandler.InvalidLiteralNumber;
-import modules.errorHandler.InvalidToken;
+import modules.errorHandler.InvalidLiteralNumberException;
+import modules.errorHandler.InvalidTokenException;
 import modules.lexer.Lexer;
 import org.junit.Test;
 
@@ -18,14 +20,14 @@ import static org.junit.Assert.fail;
 public class LexerTest {
 
     @Test
-    public void emptyInput() throws IOException, InvalidToken {
+    public void emptyInput() throws IOException, InvalidTokenException {
         Lexer lexer = new Lexer(new StringReader(""));
         assertEquals(TokenType.EndOfFile, lexer.readNextToken().getType());
         assertEquals(TokenType.EndOfFile, lexer.readNextToken().getType());
     }
 
     @Test
-    public void checkIdentifierType() throws IOException, InvalidToken {
+    public void checkIdentifierType() throws IOException, InvalidTokenException {
         Lexer lexer = new Lexer(new StringReader("id1 id_2 _id3"));
         for (int i = 0; i < 3; i++) {
             assertEquals(TokenType.Identifier, lexer.readNextToken().getType());
@@ -33,7 +35,7 @@ public class LexerTest {
     }
 
     @Test
-    public void checkNumberToken() throws IOException, InvalidToken {
+    public void checkNumberToken() throws IOException, InvalidTokenException {
         List<Double> numbers = new ArrayList<Double>(Arrays.asList(0.1D, 1D, 8.888D, 999999D));
         StringBuilder inputValue = new StringBuilder();
         for (Double number : numbers) {
@@ -47,8 +49,8 @@ public class LexerTest {
         }
     }
 
-    @Test(expected = InvalidLiteralNumber.class)
-    public void checkInvalidLiteralNumber() throws IOException, InvalidToken {
+    @Test(expected = InvalidLiteralNumberException.class)
+    public void checkInvalidLiteralNumber() throws IOException, InvalidTokenException {
         Lexer lexer = new Lexer(new StringReader("1.1.2"));
         lexer.readNextToken();
     }
@@ -66,14 +68,14 @@ public class LexerTest {
             try {
                 Token token = lexer.readNextToken();
                 fail("Unrecognized invalid token: " + token.toString());
-            } catch (InvalidToken e) {
+            } catch (InvalidTokenException e) {
                 assertEquals(invalidToken, e.getInvalidText());
             }
         }
     }
 
     @Test
-    public void checkNewVariableTypes() throws IOException, InvalidToken {
+    public void checkNewVariableTypes() throws IOException, InvalidTokenException {
         List<String> newVariableTypes = new ArrayList<>(Arrays.asList("long", "newType1", "new_type_"));
         StringBuilder builder = new StringBuilder();
         for (String newVariableType : newVariableTypes) {

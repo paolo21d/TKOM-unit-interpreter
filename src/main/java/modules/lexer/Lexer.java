@@ -4,8 +4,8 @@ import lombok.Getter;
 import modules.data.KeyWords;
 import modules.data.Token;
 import modules.data.TokenType;
-import modules.errorHandler.InvalidLiteralNumber;
-import modules.errorHandler.InvalidToken;
+import modules.errorHandler.InvalidLiteralNumberException;
+import modules.errorHandler.InvalidTokenException;
 import modules.inputManager.InputManager;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class Lexer {
         this.reader = new InputManager(reader);
     }
 
-    public Token readNextToken() throws IOException, InvalidToken {
+    public Token readNextToken() throws IOException, InvalidTokenException {
         skipWhiteCharacters();
 
         char sign = reader.peekChar();
@@ -80,7 +80,7 @@ public class Lexer {
         }
     }
 
-    private Token getNumberToken() throws IOException, InvalidLiteralNumber {
+    private Token getNumberToken() throws IOException, InvalidLiteralNumberException {
         StringBuilder buffer = new StringBuilder();
         char nextSign = reader.peekChar();
         int tokenBeginSignPosition = reader.getSignPosition() + 1;
@@ -93,12 +93,12 @@ public class Lexer {
         try {
             number = Double.parseDouble(word); //TODO ogarnac sytujacje 123>=x ORAZ sprawdzanie znaku po liczbie, zeby ogarnac sytuacje 123abc
         } catch (NumberFormatException exception) {
-            throw new InvalidLiteralNumber(reader.getCurrentLine(), word, reader.getLineNumber(), tokenBeginSignPosition);
+            throw new InvalidLiteralNumberException(reader.getCurrentLine(), word, reader.getLineNumber(), tokenBeginSignPosition);
         }
         return new Token(TokenType.NumberLiteral, number, reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
     }
 
-    private Token getOtherToken() throws IOException, InvalidToken {
+    private Token getOtherToken() throws IOException, InvalidTokenException {
         String firstSign = Character.toString(reader.getNextChar());
         int tokenBeginSignPosition = reader.getSignPosition();
         String secondSign = Character.toString(reader.peekChar());
@@ -109,7 +109,7 @@ public class Lexer {
             return new Token(KeyWords.singleSigns.get(firstSign), reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
         } else {
             reader.getNextChar(); //consume second sign
-            throw new InvalidToken(reader.getCurrentLine(), twoSigns, reader.getLineNumber(), tokenBeginSignPosition);
+            throw new InvalidTokenException(reader.getCurrentLine(), twoSigns, reader.getLineNumber(), tokenBeginSignPosition);
         }
     }
 }

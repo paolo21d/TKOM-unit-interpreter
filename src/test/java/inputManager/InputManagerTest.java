@@ -1,3 +1,5 @@
+package inputManager;
+
 import modules.inputManager.InputManager;
 import org.junit.Test;
 
