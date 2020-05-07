@@ -1,9 +1,9 @@
-import modules.ast.Program;
-import modules.data.KeyWords;
-import modules.errorHandler.InvalidTokenException;
-import modules.errorHandler.UnexpectedTokenException;
-import modules.lexer.Lexer;
-import modules.parser.Parser;
+import tkom.ast.Program;
+import tkom.data.KeyWords;
+import tkom.errorHandler.InvalidTokenException;
+import tkom.errorHandler.UnexpectedTokenException;
+import tkom.lexer.Lexer;
+import tkom.parser.Parser;
 
 import java.io.FileReader;
 import java.io.IOException;
