@@ -13,9 +13,4 @@ public class Program implements Node {
     public void addFunction(FunctionDef funcDef) {
         functions.add(funcDef);
     }
-
-    @Override
-    public NodeType getNodeType() {
-        return NodeType.PROGRAM;
-    }
 }

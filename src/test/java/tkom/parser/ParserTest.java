@@ -24,7 +24,6 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 public class ParserTest {
-    private Parser parser;
     private static final List<String> embeddedVariableTypes = Collections.unmodifiableList(
             new ArrayList<String>() {{
                 for (Map.Entry<String, TokenType> type : KeyWords.variableTypes.entrySet()) {
@@ -32,6 +31,7 @@ public class ParserTest {
                 }
             }}
     );
+    private Parser parser;
 
     private Parser initializeParser(String input) {
         Lexer lexer = new Lexer(new StringReader(input));
@@ -100,6 +100,10 @@ public class ParserTest {
         } catch (Exception e) {
             assertTrue(e instanceof UnexpectedTokenException);
         }
+    }
+
+    private Condition castCondition(Expression expression) {
+        return (Condition) expression;
     }
 
     //////////////////////////////////////////////////////////////
@@ -333,6 +337,14 @@ public class ParserTest {
         assertEquals(2, condition.getOperands().size());
         assertEquals(TokenType.And, ((Condition) condition.getOperands().get(1)).getOperator());
         assertEquals(2, ((Condition) condition.getOperands().get(1)).getOperands().size());
+
+        initializeParser("a && (b || c==4 && d>0)");
+        condition = parser.parseCondition();
+        assertNull(condition.getOperator());
+        assertEquals(1, condition.getOperands().size());
+        assertFalse(condition.getNegated());
+        assertEquals(TokenType.And, castCondition(condition.getOperands().get(0)).getOperator());
+        assertEquals(2, castCondition(condition.getOperands().get(0)).getOperands().size());
     }
 
     @Test
@@ -414,6 +426,18 @@ public class ParserTest {
         assertEquals(2, expression.getOperands().size());
         assertEquals(2, ((ExpressionNode) expression.getOperands().get(1)).getOperands().size());
         assertEquals(TokenType.Multiply, ((ExpressionNode) expression.getOperands().get(1)).getOperators().get(0));
+
+        initializeParser("a*(b+c/d)");
+        expression = parser.parseExpression();
+        assertEquals(0, expression.getOperators().size());
+        assertEquals(1, expression.getOperands().size());
+        assertEquals(Arrays.asList(TokenType.Multiply), ((ExpressionNode) expression.getOperands().get(0)).getOperators());
+        assertEquals(new Variable("a"), ((ExpressionNode) expression.getOperands().get(0)).getOperands().get(0));
+        assertEquals(Arrays.asList(TokenType.Plus), ((ExpressionNode) ((ExpressionNode) expression.getOperands().get(0)).getOperands().get(1)).getOperators());
+        assertEquals(new Variable("b"), ((ExpressionNode) ((ExpressionNode) ((ExpressionNode) expression.getOperands().get(0)).getOperands().get(1)).getOperands().get(0)).getOperands().get(0));
+        assertEquals(Arrays.asList(TokenType.Divide), ((ExpressionNode) ((ExpressionNode) ((ExpressionNode) expression.getOperands().get(0)).getOperands().get(1)).getOperands().get(1)).getOperators());
+        assertEquals(new Variable("c"), ((ExpressionNode) ((ExpressionNode) ((ExpressionNode) expression.getOperands().get(0)).getOperands().get(1)).getOperands().get(1)).getOperands().get(0));
+        assertEquals(new Variable("d"), ((ExpressionNode) ((ExpressionNode) ((ExpressionNode) expression.getOperands().get(0)).getOperands().get(1)).getOperands().get(1)).getOperands().get(1));
     }
 
     @Test

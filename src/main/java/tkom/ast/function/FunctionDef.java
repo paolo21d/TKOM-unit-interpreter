@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tkom.ast.Node;
-import tkom.ast.NodeType;
 import tkom.ast.Signature;
 import tkom.ast.statement.Block;
 
@@ -26,12 +25,7 @@ public class FunctionDef extends Signature implements Node {
         parameters.add(parameter);
     }
 
-    @Override
-    public NodeType getNodeType() {
-        return NodeType.FUNCTION_DEF;
-    }
-
-/*    public void setSignature(Signature signature) {
+    /*    public void setSignature(Signature signature) {
         this.type = signature.getType();
         this.identifier = signature.getIdentifier();
     }*/

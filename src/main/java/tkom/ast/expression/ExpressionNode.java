@@ -2,7 +2,6 @@ package tkom.ast.expression;
 
 import lombok.Data;
 import tkom.ast.Node;
-import tkom.ast.NodeType;
 import tkom.data.TokenType;
 
 import java.util.ArrayList;
@@ -19,10 +18,5 @@ public class ExpressionNode implements Expression, Node {
 
     public void addOperand(Expression operand) {
         operands.add(operand);
-    }
-
-    @Override
-    public NodeType getNodeType() {
-        return NodeType.EXPRESSION;
     }
 }

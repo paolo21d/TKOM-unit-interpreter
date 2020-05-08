@@ -2,7 +2,6 @@ package tkom.ast.condition;
 
 import lombok.Data;
 import tkom.ast.Node;
-import tkom.ast.NodeType;
 import tkom.ast.expression.Expression;
 import tkom.data.TokenType;
 
@@ -17,10 +16,5 @@ public class Condition implements Node, Expression {
 
     public void addOperand(Expression operand) {
         operands.add(operand);
-    }
-
-    @Override
-    public NodeType getNodeType() {
-        return NodeType.CONDITION;
     }
 }

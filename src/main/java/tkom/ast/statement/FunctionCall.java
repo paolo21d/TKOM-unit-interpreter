@@ -3,7 +3,6 @@ package tkom.ast.statement;
 import lombok.Data;
 import lombok.NonNull;
 import tkom.ast.Node;
-import tkom.ast.NodeType;
 import tkom.ast.expression.Expression;
 
 import java.util.ArrayList;
@@ -17,10 +16,5 @@ public class FunctionCall implements Node, Statement, Expression {
 
     public void addArgument(Expression expression) {
         arguments.add(expression);
-    }
-
-    @Override
-    public NodeType getNodeType() {
-        return NodeType.FUNCTION_CALL;
     }
 }

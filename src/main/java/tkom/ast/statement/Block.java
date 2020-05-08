@@ -2,7 +2,6 @@ package tkom.ast.statement;
 
 import lombok.Getter;
 import tkom.ast.Node;
-import tkom.ast.NodeType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +12,5 @@ public class Block implements Statement, Node {
 
     public void addStatement(Statement statement) {
         statements.add(statement);
-    }
-
-    @Override
-    public NodeType getNodeType() {
-        return NodeType.BLOCK;
     }
 }
