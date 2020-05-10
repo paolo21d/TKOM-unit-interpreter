@@ -29,5 +29,6 @@ public enum TokenType {
     Identifier,
     NumberLiteral,
     EndOfFile,
-    VariableType
+    VariableType,
+    String
 }

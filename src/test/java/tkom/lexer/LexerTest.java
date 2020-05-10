@@ -5,6 +5,7 @@ import tkom.data.KeyWords;
 import tkom.data.Token;
 import tkom.data.TokenType;
 import tkom.errorHandler.InvalidLiteralNumberException;
+import tkom.errorHandler.InvalidStringException;
 import tkom.errorHandler.InvalidTokenException;
 
 import java.io.IOException;
@@ -13,8 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class LexerTest {
 
@@ -35,16 +35,16 @@ public class LexerTest {
 
     @Test
     public void checkNumberToken() throws IOException, InvalidTokenException {
-        List<Double> numbers = new ArrayList<Double>(Arrays.asList(0.1D, 1D, 8.888D, 999999D));
+        List<Double> numbers = new ArrayList<>(Arrays.asList(0.1D, 1D, 8.888D, 999999D));
         StringBuilder inputValue = new StringBuilder();
         for (Double number : numbers) {
             inputValue.append(number.toString()).append(" ");
         }
         Lexer lexer = new Lexer(new StringReader(inputValue.toString()));
-        for (double number : numbers) {
+        for (Double number : numbers) {
             Token token = lexer.readNextToken();
             assertEquals(TokenType.NumberLiteral, token.getType());
-            assertEquals(number, token.getLiteralNumber());
+            assertEquals(number, Double.valueOf(token.getLiteralNumber()));
         }
     }
 
@@ -89,5 +89,19 @@ public class LexerTest {
             assertEquals(newVariableType, token.getValue());
         }
 
+    }
+
+    @Test
+    public void checkStringToken() throws IOException, InvalidTokenException {
+        Lexer lexer = new Lexer(new StringReader("\"String in my program\""));
+        Token token = lexer.readNextToken();
+        assertEquals(TokenType.String, token.getType());
+        assertEquals("String in my program", token.getValue());
+    }
+
+    @Test
+    public void checkInvalidStringToken() {
+        Lexer lexer = new Lexer(new StringReader("\"String in my program"));
+        assertThrows(InvalidStringException.class, lexer::readNextToken);
     }
 }

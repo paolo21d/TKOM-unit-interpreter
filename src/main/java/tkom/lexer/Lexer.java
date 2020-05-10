@@ -5,6 +5,7 @@ import tkom.data.KeyWords;
 import tkom.data.Token;
 import tkom.data.TokenType;
 import tkom.errorHandler.InvalidLiteralNumberException;
+import tkom.errorHandler.InvalidStringException;
 import tkom.errorHandler.InvalidTokenException;
 import tkom.inputManager.InputManager;
 
@@ -32,6 +33,8 @@ public class Lexer {
             token = getKeywordOrIdentifierToken();
         } else if (isStartingNumber(sign)) {
             token = getNumberToken();
+        } else if (isStartingString(sign)) {
+            token = getStringToken();
         } else {
             token = getOtherToken();
         }
@@ -56,6 +59,10 @@ public class Lexer {
 
     private boolean isStartingNumber(char sign) {
         return Character.isDigit(sign);
+    }
+
+    private boolean isStartingString(char sign) {
+        return sign == '"';
     }
 
     private boolean isEndOfFile(char sign) {
@@ -96,6 +103,24 @@ public class Lexer {
             throw new InvalidLiteralNumberException(reader.getCurrentLine(), word, reader.getLineNumber(), tokenBeginSignPosition);
         }
         return new Token(TokenType.NumberLiteral, number, reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
+    }
+
+    private Token getStringToken() throws IOException, InvalidStringException {
+        int tokenBeginSignPosition = reader.getSignPosition() + 1;
+        StringBuilder buffer = new StringBuilder();
+        reader.getNextChar(); //consume begin of String
+        char nextSign = reader.peekChar();
+        while (nextSign != '"') {
+            if (isEndOfFile(nextSign)) {
+                throw new InvalidStringException(reader.getCurrentLine(), buffer.toString(), reader.getLineNumber(), tokenBeginSignPosition);
+            }
+            buffer.append(reader.getNextChar());
+            nextSign = reader.peekChar();
+        }
+        reader.getNextChar(); //consume end of String
+        String word = buffer.toString();
+
+        return new Token(TokenType.String, word, reader.getLineNumber(), reader.getSignPosition(), reader.getCurrentLine());
     }
 
     private Token getOtherToken() throws IOException, InvalidTokenException {
