@@ -389,7 +389,7 @@ public class Parser {
         }
     }
 
-    Expression parseLiteral() throws IOException, InvalidTokenException, UnexpectedTokenException { //TODO moze rozdzielic na IntegerNode i DoubleNode???
+    Expression parseLiteral() throws IOException, InvalidTokenException, UnexpectedTokenException {
         int signValue = getSignValue();
         double numberValue = getCheckedNextTokenType(TokenType.NumberLiteral).getLiteralNumber();
         return new NumberNode(numberValue * signValue);

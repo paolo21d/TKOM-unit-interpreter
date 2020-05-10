@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NonNull;
 import tkom.ast.Node;
 import tkom.ast.expression.Expression;
+import tkom.ast.expression.ExpressionNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.List;
 public class FunctionCall implements Node, Statement, Expression {
     @NonNull
     private String identifier;
-    List<Expression> arguments = new ArrayList<>(); //TODO moze to powinien być ExpressionNode
+    List<ExpressionNode> arguments = new ArrayList<>(); //TODO moze to powinien być ExpressionNode
 
-    public void addArgument(Expression expression) {
+    public void addArgument(ExpressionNode expression) {
         arguments.add(expression);
     }
 }

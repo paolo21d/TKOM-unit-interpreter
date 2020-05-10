@@ -4,7 +4,7 @@ import tkom.data.TokenType;
 
 import java.util.List;
 
-public class UnexpectedTokenException extends Exception { //TODO dodać lineConetnt
+public class UnexpectedTokenException extends Exception {
 
     public UnexpectedTokenException(int line,
                                     int position,

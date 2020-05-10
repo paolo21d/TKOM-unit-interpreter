@@ -48,15 +48,10 @@ public class ParserTest {
         assertEquals(token.getValue(), value);
     }
 
-    private void assertToken(Token token, TokenType tokenType, double value) { //TODO maybe remove
-        assertEquals(token.getType(), tokenType);
-        assertEquals(token.getLiteralNumber(), value);
-    }
-
     private void assertFunctionDef(FunctionDef functionDef, String type, String identifier, List<Signature> parameters) {
-        assertEquals(functionDef.getType(), type);
-        assertEquals(functionDef.getIdentifier(), identifier);
-        assertEquals(functionDef.getParameters(), parameters);
+        assertEquals(type, functionDef.getType());
+        assertEquals(identifier, functionDef.getIdentifier());
+        assertEquals(parameters, functionDef.getParameters());
     }
 
     private void assertExceptionParameters(String input, String errorMessage) {
@@ -103,7 +98,7 @@ public class ParserTest {
         return (Condition) expression;
     }
 
-    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////  TESTS
     @Test
     public void checkGetNextToken() throws IOException, InvalidTokenException {
         initializeParser("a b c d");
@@ -157,7 +152,7 @@ public class ParserTest {
 
         initializeParser(input);
         Program program = parser.parseProgram();
-        assertEquals(program.getFunctions().size(), 2);
+        assertEquals(2, program.getFunctions().size());
         assertFunctionDef(program.getFunctions().get(0), "KILO", "max", Arrays.asList(new Signature("KILO", "unit1"), new Signature("KILO", "unit2")));
         assertFunctionDef(program.getFunctions().get(1), "INTEGER", "main", new ArrayList<>());
     }
@@ -185,7 +180,7 @@ public class ParserTest {
         }
         initializeParser(inputBuilder.toString(), newTypes);
         for (String type : types) {
-            assertEquals(parser.parseSignature(), new Signature(type, "variable"));
+            assertEquals(new Signature(type, "variable"), parser.parseSignature());
         }
     }
 
@@ -193,14 +188,14 @@ public class ParserTest {
     public void checkParseParameters() throws IOException, InvalidTokenException, UnexpectedTokenException {
         String input = "() (integer a) (integer a, integer b) (integer a, integer b, integer c)";
         initializeParser(input);
-        assertEquals(parser.parseParameters(),
-                new ArrayList<Signature>());
-        assertEquals(parser.parseParameters(),
-                Arrays.asList(new Signature("integer", "a")));
-        assertEquals(parser.parseParameters(),
-                Arrays.asList(new Signature("integer", "a"), new Signature("integer", "b")));
-        assertEquals(parser.parseParameters(),
-                Arrays.asList(new Signature("integer", "a"), new Signature("integer", "b"), new Signature("integer", "c")));
+        assertEquals(new ArrayList<Signature>(),
+                parser.parseParameters());
+        assertEquals(Arrays.asList(new Signature("integer", "a")),
+                parser.parseParameters());
+        assertEquals(Arrays.asList(new Signature("integer", "a"), new Signature("integer", "b")),
+                parser.parseParameters());
+        assertEquals(Arrays.asList(new Signature("integer", "a"), new Signature("integer", "b"), new Signature("integer", "c")),
+                parser.parseParameters());
     }
 
     @Test()
@@ -213,10 +208,10 @@ public class ParserTest {
     @Test
     public void checkParseBlock() throws IOException, InvalidTokenException, UnexpectedTokenException {
         initializeParser("{}");
-        assertEquals(parser.parseBlock().getStatements().size(), 0);
+        assertEquals(0, parser.parseBlock().getStatements().size());
 
         initializeParser("{integer a;return a;}");
-        assertEquals(parser.parseBlock().getStatements().size(), 2);
+        assertEquals(2, parser.parseBlock().getStatements().size());
     }
 
     @Test
@@ -286,8 +281,8 @@ public class ParserTest {
         initializeParser("printMethod(\"text to print\");");
         FunctionCall functionCallStatement = (FunctionCall) parser.parseAssignmentOrFunctionCallStatement();
         assertEquals("printMethod", functionCallStatement.getIdentifier());
-        assertTrue(((ExpressionNode) functionCallStatement.getArguments().get(0)).getOperands().get(0) instanceof StringNode);
-        assertEquals("text to print", ((StringNode) ((ExpressionNode) functionCallStatement.getArguments().get(0)).getOperands().get(0)).getValue());
+        assertTrue(functionCallStatement.getArguments().get(0).getOperands().get(0) instanceof StringNode);
+        assertEquals("text to print", ((StringNode) functionCallStatement.getArguments().get(0).getOperands().get(0)).getValue());
     }
 
     @Test
