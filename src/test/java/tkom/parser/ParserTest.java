@@ -4,10 +4,7 @@ import org.junit.Test;
 import tkom.ast.Program;
 import tkom.ast.Signature;
 import tkom.ast.condition.Condition;
-import tkom.ast.expression.DoubleNode;
-import tkom.ast.expression.Expression;
-import tkom.ast.expression.ExpressionNode;
-import tkom.ast.expression.Variable;
+import tkom.ast.expression.*;
 import tkom.ast.function.FunctionDef;
 import tkom.ast.statement.*;
 import tkom.data.KeyWords;
@@ -285,6 +282,15 @@ public class ParserTest {
     }
 
     @Test
+    public void checkParseFunctionCall() throws IOException, InvalidTokenException, UnexpectedTokenException {
+        initializeParser("printMethod(\"text to print\");");
+        FunctionCall functionCallStatement = (FunctionCall) parser.parseAssignmentOrFunctionCallStatement();
+        assertEquals("printMethod", functionCallStatement.getIdentifier());
+        assertTrue(((ExpressionNode) functionCallStatement.getArguments().get(0)).getOperands().get(0) instanceof StringNode);
+        assertEquals("text to print", ((StringNode) ((ExpressionNode) functionCallStatement.getArguments().get(0)).getOperands().get(0)).getValue());
+    }
+
+    @Test
     public void checkParseIfStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
         initializeParser("if(1==2) return 0;");
         assertNull(((IfStatement) parser.parseIfStatement()).getFalseStatement());
@@ -452,11 +458,11 @@ public class ParserTest {
     public void checkParsePrimaryExpression() throws UnexpectedTokenException, InvalidTokenException, IOException {
         initializeParser("1.1");
         Expression expression = parser.parsePrimaryExpression();
-        assertTrue(expression instanceof DoubleNode);
+        assertTrue(expression instanceof NumberNode);
 
         initializeParser("-1.1");
         expression = parser.parsePrimaryExpression();
-        assertTrue(expression instanceof DoubleNode);
+        assertTrue(expression instanceof NumberNode);
 
         //check ParenthOpen
         initializeParser("(a)");
@@ -488,11 +494,11 @@ public class ParserTest {
     @Test
     public void checkParseLiteral() throws UnexpectedTokenException, InvalidTokenException, IOException {
         initializeParser("1.1");
-        DoubleNode expression = (DoubleNode) parser.parseLiteral();
+        NumberNode expression = (NumberNode) parser.parseLiteral();
         assertEquals(Double.valueOf(1.1), Double.valueOf(expression.getValue()));
 
         initializeParser("-1.1");
-        expression = (DoubleNode) parser.parseLiteral();
+        expression = (NumberNode) parser.parseLiteral();
         assertEquals(Double.valueOf(-1.1), Double.valueOf(expression.getValue()));
     }
 

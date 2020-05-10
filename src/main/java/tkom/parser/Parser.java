@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import tkom.ast.Program;
 import tkom.ast.Signature;
 import tkom.ast.condition.Condition;
-import tkom.ast.expression.DoubleNode;
-import tkom.ast.expression.Expression;
-import tkom.ast.expression.ExpressionNode;
-import tkom.ast.expression.Variable;
+import tkom.ast.expression.*;
 import tkom.ast.function.FunctionDef;
 import tkom.ast.statement.*;
 import tkom.data.Token;
@@ -194,6 +191,9 @@ public class Parser {
     FunctionCall parseFunctionCallStatement(String identifier) throws UnexpectedTokenException, InvalidTokenException, IOException {
         FunctionCall statement = new FunctionCall(identifier);
         getCheckedNextTokenType(TokenType.ParenthOpen);
+        if (peekToken().getType().equals(TokenType.String)) {
+            return parsePrintFunction(statement);
+        }
         while (!peekToken().getType().equals(TokenType.ParenthClose)) {
             statement.addArgument(parseExpression());
             if (peekToken().getType().equals(TokenType.Comma)) { //TODO pomyslec nad tym bo jest raczej zle
@@ -211,6 +211,24 @@ public class Parser {
         }
         getCheckedNextTokenType(TokenType.ParenthClose);
         return statement;
+    }
+
+    FunctionCall parsePrintFunction(FunctionCall functionCall) throws IOException, InvalidTokenException, UnexpectedTokenException {
+        ExpressionNode expression = new ExpressionNode();
+        Token stringToken = getNextToken();
+        if (!stringToken.getType().equals(TokenType.String)) {
+            throw new UnexpectedTokenException(
+                    peekToken().getLineNumber(),
+                    peekToken().getSignPosition(),
+                    peekToken().getLineContent(),
+                    TokenType.String,
+                    peekToken().getType()
+            );
+        }
+        expression.addOperand(new StringNode(stringToken.getValue()));
+        functionCall.addArgument(expression);
+        getCheckedNextTokenType(TokenType.ParenthClose);
+        return functionCall;
     }
 
     Statement parseIfStatement() throws UnexpectedTokenException, InvalidTokenException, IOException {
@@ -374,7 +392,7 @@ public class Parser {
     Expression parseLiteral() throws IOException, InvalidTokenException, UnexpectedTokenException { //TODO moze rozdzielic na IntegerNode i DoubleNode???
         int signValue = getSignValue();
         double numberValue = getCheckedNextTokenType(TokenType.NumberLiteral).getLiteralNumber();
-        return new DoubleNode(numberValue * signValue);
+        return new NumberNode(numberValue * signValue);
     }
 
     int getSignValue() throws IOException, InvalidTokenException {

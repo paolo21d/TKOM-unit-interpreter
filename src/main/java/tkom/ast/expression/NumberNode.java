@@ -6,6 +6,6 @@ import tkom.ast.Node;
 
 @Data
 @AllArgsConstructor
-public class IntegerNode implements Expression, Node {
-    private int value;
+public class NumberNode implements Expression, Node {
+    private double value;
 }
