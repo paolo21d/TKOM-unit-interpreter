@@ -1,11 +1,12 @@
-import modules.Data.KeyWords;
-import modules.Data.TokenType;
-import modules.ErrorHandler.InvalidToken;
-import modules.Lexer.Lexer;
+package tkom.lexer;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import tkom.data.KeyWords;
+import tkom.data.TokenType;
+import tkom.errorHandler.InvalidTokenException;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -50,7 +51,7 @@ public class LexerRecognitionTokenType {
     }
 
     @Test
-    public void testLexerRecognitionTokenType() throws IOException, InvalidToken {
+    public void testLexerRecognitionTokenType() throws IOException, InvalidTokenException {
         assertEquals(expectedTokenType, lexer.readNextToken().getType());
     }
 }

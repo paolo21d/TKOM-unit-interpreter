@@ -1,4 +1,4 @@
-package modules.Data;
+package tkom.data;
 
 public enum TokenType {
     Function,
@@ -29,5 +29,6 @@ public enum TokenType {
     Identifier,
     NumberLiteral,
     EndOfFile,
-    VariableType
+    VariableType,
+    String
 }

@@ -1,11 +1,11 @@
-package modules.ErrorHandler;
+package tkom.errorHandler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class InvalidToken extends Exception {
+public class InvalidTokenException extends Exception {
     private String lineContent;
     private String invalidText;
     private int lineNumber;

@@ -1,17 +1,18 @@
-import modules.Data.KeyWords;
-import modules.Data.Token;
-import modules.Data.TokenType;
-import modules.ErrorHandler.InvalidToken;
-import modules.Lexer.Lexer;
+import tkom.ast.Program;
+import tkom.data.KeyWords;
+import tkom.errorHandler.InvalidTokenException;
+import tkom.errorHandler.UnexpectedTokenException;
+import tkom.lexer.Lexer;
+import tkom.parser.Parser;
 
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InvalidToken {
+    public static void main(String[] args) throws IOException, InvalidTokenException, UnexpectedTokenException {
         KeyWords.addVariableType("long");
 //        Lexer lexer = new Lexer(new FileReader("src/main/resources/example1.txt"));
-        Lexer lexer = new Lexer(new StringReader("function INTEGER main() { return 0.0; }"));
+/*        Lexer lexer = new Lexer(new StringReader("function INTEGER main() { return 0.0; }"));
         Token token = lexer.readNextToken();
         while (token.getType() != TokenType.EndOfFile) {
             if (token.getType().equals(TokenType.Identifier)) {
@@ -22,6 +23,11 @@ public class Main {
                 System.out.println(token.getType().toString());
             }
             token = lexer.readNextToken();
-        }
+        }*/
+
+//        Parser parser = new Parser(new Lexer(new StringReader("function INTEGER main() { return 0.0; }")));
+        Parser parser = new Parser(new Lexer(new FileReader("src/main/resources/example1.txt")));
+        Program program = parser.parseProgram();
+        System.out.println(program);
     }
 }
