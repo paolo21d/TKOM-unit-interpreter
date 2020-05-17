@@ -1,4 +1,4 @@
-package modules.Data;
+package tkom.data;
 
 import lombok.Data;
 

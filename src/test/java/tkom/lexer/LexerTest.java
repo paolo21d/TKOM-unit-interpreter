@@ -1,10 +1,12 @@
-import modules.Data.KeyWords;
-import modules.Data.Token;
-import modules.Data.TokenType;
-import modules.ErrorHandler.InvalidLiteralNumber;
-import modules.ErrorHandler.InvalidToken;
-import modules.Lexer.Lexer;
+package tkom.lexer;
+
 import org.junit.Test;
+import tkom.data.KeyWords;
+import tkom.data.Token;
+import tkom.data.TokenType;
+import tkom.errorHandler.InvalidLiteralNumberException;
+import tkom.errorHandler.InvalidStringException;
+import tkom.errorHandler.InvalidTokenException;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -12,20 +14,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class LexerTest {
 
     @Test
-    public void emptyInput() throws IOException, InvalidToken {
+    public void emptyInput() throws IOException, InvalidTokenException {
         Lexer lexer = new Lexer(new StringReader(""));
         assertEquals(TokenType.EndOfFile, lexer.readNextToken().getType());
         assertEquals(TokenType.EndOfFile, lexer.readNextToken().getType());
     }
 
     @Test
-    public void checkIdentifierType() throws IOException, InvalidToken {
+    public void checkIdentifierType() throws IOException, InvalidTokenException {
         Lexer lexer = new Lexer(new StringReader("id1 id_2 _id3"));
         for (int i = 0; i < 3; i++) {
             assertEquals(TokenType.Identifier, lexer.readNextToken().getType());
@@ -33,8 +34,8 @@ public class LexerTest {
     }
 
     @Test
-    public void checkNumberToken() throws IOException, InvalidToken {
-        List<Double> numbers = new ArrayList<Double>(Arrays.asList(0.1D, 1D, 8.888D, 999999D));
+    public void checkNumberToken() throws IOException, InvalidTokenException {
+        List<Double> numbers = new ArrayList<>(Arrays.asList(0.1D, 1D, 8.888D, 999999D));
         StringBuilder inputValue = new StringBuilder();
         for (Double number : numbers) {
             inputValue.append(number.toString()).append(" ");
@@ -43,12 +44,12 @@ public class LexerTest {
         for (Double number : numbers) {
             Token token = lexer.readNextToken();
             assertEquals(TokenType.NumberLiteral, token.getType());
-            assertEquals(number, token.getLiteralNumber());
+            assertEquals(number, Double.valueOf(token.getLiteralNumber()));
         }
     }
 
-    @Test(expected = InvalidLiteralNumber.class)
-    public void checkInvalidLiteralNumber() throws IOException, InvalidToken {
+    @Test(expected = InvalidLiteralNumberException.class)
+    public void checkInvalidLiteralNumber() throws IOException, InvalidTokenException {
         Lexer lexer = new Lexer(new StringReader("1.1.2"));
         lexer.readNextToken();
     }
@@ -66,14 +67,14 @@ public class LexerTest {
             try {
                 Token token = lexer.readNextToken();
                 fail("Unrecognized invalid token: " + token.toString());
-            } catch (InvalidToken e) {
+            } catch (InvalidTokenException e) {
                 assertEquals(invalidToken, e.getInvalidText());
             }
         }
     }
 
     @Test
-    public void checkNewVariableTypes() throws IOException, InvalidToken {
+    public void checkNewVariableTypes() throws IOException, InvalidTokenException {
         List<String> newVariableTypes = new ArrayList<>(Arrays.asList("long", "newType1", "new_type_"));
         StringBuilder builder = new StringBuilder();
         for (String newVariableType : newVariableTypes) {
@@ -88,5 +89,19 @@ public class LexerTest {
             assertEquals(newVariableType, token.getValue());
         }
 
+    }
+
+    @Test
+    public void checkStringToken() throws IOException, InvalidTokenException {
+        Lexer lexer = new Lexer(new StringReader("\"String in my program\""));
+        Token token = lexer.readNextToken();
+        assertEquals(TokenType.String, token.getType());
+        assertEquals("String in my program", token.getValue());
+    }
+
+    @Test
+    public void checkInvalidStringToken() {
+        Lexer lexer = new Lexer(new StringReader("\"String in my program"));
+        assertThrows(InvalidStringException.class, lexer::readNextToken);
     }
 }

@@ -1,4 +1,5 @@
-import modules.InputManager.InputManager;
+package tkom.inputManager;
+
 import org.junit.Test;
 
 import java.io.FileNotFoundException;

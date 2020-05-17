@@ -1,4 +1,4 @@
-package modules.InputManager;
+package tkom.inputManager;
 
 import lombok.Getter;
 
