@@ -15,6 +15,7 @@ public class Environment {
     private final Map<String, FunctionDef> functions;
     private final UnitRatio unitRatio;
     private Stack<Scope> scopeStack = new Stack<>();
+    Stack<FunctionDef> functionCallingStack = new Stack<>();
 
     public Environment(List<FunctionDef> functions, UnitRatio unitRatio) throws RuntimeEnvironmentException {
         this.functions = new HashMap<>();
@@ -40,6 +41,24 @@ public class Environment {
         Scope localScope = new Scope(scopeStack.peek());
         scopeStack.push(localScope);
     }
+
+/*    public void createNewFunctionScope(FunctionDef function, List<Expression> arguments) throws RuntimeEnvironmentException {
+        Scope functionScope = new Scope(null);
+        if (function.getParameters().size() != arguments.size()) {
+            throw new RuntimeEnvironmentException("Invalid number of function " + function.getIdentifier() + " arguments! "
+                    + "Expected: " + function.getParameters().size()
+                    + " Provided: " + arguments.size());
+        }
+        functionCallingStack.push(function);
+        for(Expression argument: arguments) {
+
+        }
+
+        for(int i=0; i<arguments.size(); i++) {
+            Value argumentValue = arguments.get(i).evaluate(this);
+            Signature functionParameter   = function.getParameters().get(i);
+        }
+    }*/
 
     public void destroyScope() {
         scopeStack.pop();

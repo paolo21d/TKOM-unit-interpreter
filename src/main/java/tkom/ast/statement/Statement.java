@@ -1,7 +1,8 @@
 package tkom.ast.statement;
 
+import tkom.errorHandler.RuntimeEnvironmentException;
 import tkom.execution.Environment;
 
 public interface Statement {
-    void execute(Environment environment) throws RuntimeException;
+    ExecuteOut execute(Environment environment) throws RuntimeEnvironmentException;
 }
