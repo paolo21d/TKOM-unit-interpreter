@@ -27,4 +27,9 @@ public class StringNode implements Expression, Value, Node {
             throw new RuntimeEnvironmentException("Cannot compare to StringNode");
         }
     }
+
+    @Override
+    public String toString() {
+        return "String: " + value;
+    }
 }

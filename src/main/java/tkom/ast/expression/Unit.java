@@ -123,4 +123,9 @@ public class Unit implements Expression, ArithmeticValue, Node {
             throw new RuntimeEnvironmentException("Cannot compare unit and not unit type");
         }
     }
+
+    @Override
+    public String toString() {
+        return "UNIT: " + value + " " + unitType;
+    }
 }

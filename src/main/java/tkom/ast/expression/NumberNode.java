@@ -104,5 +104,9 @@ public class NumberNode implements Expression, ArithmeticValue, Node {
         }
     }
 
+    @Override
+    public String toString() {
+        return "NUMBER: " + value;
+    }
 
 }

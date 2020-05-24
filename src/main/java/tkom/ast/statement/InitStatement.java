@@ -24,6 +24,7 @@ public class InitStatement extends Signature implements Statement, Node {
             environment.addVariable(getIdentifier(), getDefaultValue(environment));
         } else {
             Value assign = assignable.evaluate(environment);
+
             Value convertedValue = convert(environment, assign);
             environment.addVariable(getIdentifier(), convertedValue);
         }
@@ -50,6 +51,8 @@ public class InitStatement extends Signature implements Statement, Node {
             double resultValue = inputUnitValue * inputUnitRatio / resultUnitRatio;
             return new Unit(resultValue, getType(), resultUnitRatio);*/
             return environment.castUnitType(((Unit) assign).getUnitType(), getType(), ((Unit) assign).getValue());
+        } else if (!isNumber() && assign instanceof NumberNode) {
+            return new Unit(((NumberNode) assign).getValue(), getType(), environment.getUnitRatio().getUnitValue(getType()));
         } else {
             throw new RuntimeEnvironmentException("Cannot assign to " + getType().toUpperCase());
         }

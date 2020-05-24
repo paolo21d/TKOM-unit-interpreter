@@ -27,8 +27,6 @@ public class FunctionDef extends Signature implements Node {
     private List<Signature> parameters = new ArrayList<>();
     private Block block;
 
-    private Value returnedValue = null;
-
     public FunctionDef(String type, String identifier) {
         super(type, identifier);
     }
@@ -44,6 +42,11 @@ public class FunctionDef extends Signature implements Node {
 ////////////////////////////////////////////////////////////////////
 
     public Value execute(Environment environment, List<Expression> arguments) throws RuntimeEnvironmentException {
+        if(identifier.toUpperCase().equals("PRINT")) {
+
+            return new NumberNode(0.0);
+        }
+
         checkParameters();
         setUpEnvironmentForFunction(environment, arguments);
         ExecuteOut out = block.execute(environment);
@@ -111,6 +114,14 @@ public class FunctionDef extends Signature implements Node {
         } else {
             throw new RuntimeEnvironmentException("Cannot cast return type");
         }
+    }
+
+    void executePrintFunction(Environment environment, List<Expression> arguments) throws RuntimeEnvironmentException {
+        if(arguments.size() != 1) {
+            throw new RuntimeEnvironmentException("Print function argument require 1 argument");
+        }
+
+
     }
 
 }

@@ -7,18 +7,15 @@ import tkom.ast.function.FunctionDef;
 import tkom.data.UnitRatio;
 import tkom.errorHandler.RuntimeEnvironmentException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 @Getter
 public class Environment {
 
     private final Map<String, FunctionDef> functions;
     private final UnitRatio unitRatio;
-    private Stack<Scope> scopeStack = new Stack<>();
     Stack<FunctionDef> functionCallingStack = new Stack<>();
+    private Stack<Scope> scopeStack = new Stack<>();
 
     public Environment(List<FunctionDef> functions, UnitRatio unitRatio) throws RuntimeEnvironmentException {
         this.functions = new HashMap<>();
@@ -41,7 +38,14 @@ public class Environment {
     }
 
     public void createNewLocalScope() {
-        Scope localScope = new Scope(scopeStack.peek());
+        Scope parentScope;
+        try {
+            parentScope = scopeStack.peek();
+        } catch (EmptyStackException e) {
+            parentScope = null;
+        }
+
+        Scope localScope = new Scope(parentScope);
         scopeStack.push(localScope);
     }
 
@@ -116,7 +120,7 @@ public class Environment {
         return unitRatio.isUnitDefined(identifier);
     }
 
-    public Unit castUnitType (String originalUnitType, String resultUnitType, double originalUnitValue) throws RuntimeEnvironmentException {
+    public Unit castUnitType(String originalUnitType, String resultUnitType, double originalUnitValue) throws RuntimeEnvironmentException {
         double resultValue = unitRatio.castUnits(originalUnitType, resultUnitType, originalUnitValue);
         return new Unit(resultValue, resultUnitType, unitRatio.getUnitValue(resultUnitType));
     }
