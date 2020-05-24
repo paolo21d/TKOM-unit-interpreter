@@ -1,6 +1,8 @@
 package tkom.execution;
 
+import lombok.Getter;
 import tkom.ast.Value;
+import tkom.ast.expression.Unit;
 import tkom.ast.function.FunctionDef;
 import tkom.data.UnitRatio;
 import tkom.errorHandler.RuntimeEnvironmentException;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+@Getter
 public class Environment {
 
     private final Map<String, FunctionDef> functions;
@@ -111,5 +114,10 @@ public class Environment {
 
     public boolean isUnitDefined(String identifier) {
         return unitRatio.isUnitDefined(identifier);
+    }
+
+    public Unit castUnitType (String originalUnitType, String resultUnitType, double originalUnitValue) throws RuntimeEnvironmentException {
+        double resultValue = unitRatio.castUnits(originalUnitType, resultUnitType, originalUnitValue);
+        return new Unit(resultValue, resultUnitType, unitRatio.getUnitValue(resultUnitType));
     }
 }

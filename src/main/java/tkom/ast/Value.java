@@ -3,9 +3,11 @@ package tkom.ast;
 import tkom.ast.expression.Expression;
 import tkom.ast.expression.NumberNode;
 import tkom.ast.expression.Unit;
+import tkom.errorHandler.RuntimeEnvironmentException;
 
 public interface Value {
-    boolean isInitialized();
+
+    ArithmeticValue isEqual(Value secondOperand) throws RuntimeEnvironmentException;
 
     static boolean isNumber(Expression value) {
         return value instanceof NumberNode;
@@ -16,6 +18,10 @@ public interface Value {
     }
 
     static double getNumberValue(Value value) {
-        return
+        return ((NumberNode) value).getValue();
+    }
+
+    static double getUnitValue(Value value) {
+        return ((Unit) value).getValue();
     }
 }

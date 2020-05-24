@@ -281,8 +281,8 @@ public class ParserTest {
         initializeParser("printMethod(\"text to print\");");
         FunctionCall functionCallStatement = (FunctionCall) parser.parseAssignmentOrFunctionCallStatement();
         assertEquals("printMethod", functionCallStatement.getIdentifier());
-        assertTrue(functionCallStatement.getArguments().get(0).getOperands().get(0) instanceof StringNode);
-        assertEquals("text to print", ((StringNode) functionCallStatement.getArguments().get(0).getOperands().get(0)).getValue());
+        assertTrue(((ExpressionNode) functionCallStatement.getArguments().get(0)).getOperands().get(0) instanceof StringNode);
+        assertEquals("text to print", ((StringNode) ((ExpressionNode)functionCallStatement.getArguments().get(0)).getOperands().get(0)).getValue());
     }
 
     @Test

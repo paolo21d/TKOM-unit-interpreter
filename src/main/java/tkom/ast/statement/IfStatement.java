@@ -22,9 +22,9 @@ public class IfStatement implements Statement, Node {
 
     private ExecuteOut executeIfStatement(Environment environment) throws RuntimeEnvironmentException {
         if (condition.checkIfTrue(environment)) {
-            trueStatement.execute(environment);
+             return trueStatement.execute(environment);
         } else if (falseStatement != null) {
-            falseStatement.execute(environment);
+             return falseStatement.execute(environment);
         }
 
         return new ExecuteOut(ExecuteOut.ExecuteStatus.NORMAL);

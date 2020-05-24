@@ -1,7 +1,9 @@
 package tkom.ast.statement;
 
+import lombok.Getter;
 import tkom.ast.Value;
 
+@Getter
 public class ExecuteOut {
     private final Value returnedValue;
     private final ExecuteStatus status;
