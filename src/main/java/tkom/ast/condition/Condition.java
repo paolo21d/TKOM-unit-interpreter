@@ -69,11 +69,15 @@ public class Condition implements Node, Expression {
         return null;
     }
 
-    private Value negation(Value value) {
-        if (((NumberNode) value).getValue() == 0.0) {
-            return new NumberNode(1.0);
+    private Value negation(Value value) throws RuntimeEnvironmentException {
+        if(value instanceof NumberNode) {
+            if (((NumberNode) value).getValue() == 0.0) {
+                return new NumberNode(1.0);
+            } else {
+                return new NumberNode(0.0);
+            }
         } else {
-            return new NumberNode(0.0);
+            throw new RuntimeEnvironmentException("Cannot negate non number");
         }
     }
 

@@ -273,7 +273,7 @@ public class Parser {
         return statement;
     }
 
-    Condition parseCondition() throws IOException, InvalidTokenException, UnexpectedTokenException {
+    public Condition parseCondition() throws IOException, InvalidTokenException, UnexpectedTokenException {
         Condition condition = new Condition();
         condition.addOperand(parseAndCondition());
 
@@ -335,7 +335,7 @@ public class Parser {
         return condition;
     }
 
-    ExpressionNode parseExpression() throws IOException, InvalidTokenException, UnexpectedTokenException {
+    public ExpressionNode parseExpression() throws IOException, InvalidTokenException, UnexpectedTokenException {
         ExpressionNode expression = new ExpressionNode();
         expression.addOperand(parseMultiplicativeExpression());
 
