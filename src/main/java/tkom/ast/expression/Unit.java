@@ -49,6 +49,8 @@ public class Unit implements Expression, ArithmeticValue, Node {
         if (secondOperand instanceof Unit) {
             double resultValue = (getValueInBase() * ((Unit) secondOperand).getValueInBase()) / ((Unit) secondOperand).getRatio();
             return new Unit(resultValue, ((Unit) secondOperand).getUnitType(), ((Unit) secondOperand).getRatio());
+        } else if (secondOperand instanceof NumberNode) {
+            return new Unit(value * ((NumberNode) secondOperand).getValue(), unitType, ratio);
         } else {
             throw new RuntimeEnvironmentException("Cannot multiply Unit");
         }
@@ -59,6 +61,8 @@ public class Unit implements Expression, ArithmeticValue, Node {
         if (secondOperand instanceof Unit) {
             double resultValue = (getValueInBase() / ((Unit) secondOperand).getValueInBase()) / ((Unit) secondOperand).getRatio();
             return new Unit(resultValue, ((Unit) secondOperand).getUnitType(), ((Unit) secondOperand).getRatio());
+        } else if (secondOperand instanceof NumberNode) {
+            return new Unit(value / ((NumberNode) secondOperand).getValue(), unitType, ratio);
         } else {
             throw new RuntimeEnvironmentException("Cannot divide Unit");
         }

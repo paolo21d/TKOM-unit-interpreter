@@ -40,6 +40,8 @@ public class NumberNode implements Expression, ArithmeticValue, Node {
     public ArithmeticValue multiply(Value secondOperand) throws RuntimeEnvironmentException {
         if (secondOperand instanceof NumberNode) {
             return new NumberNode(value * ((NumberNode) secondOperand).value);
+        } else if (secondOperand instanceof Unit) {
+            return new Unit(value * ((Unit) secondOperand).getValue(), ((Unit) secondOperand).getUnitType(), ((Unit) secondOperand).getRatio());
         } else {
             throw new RuntimeEnvironmentException("Cannot multiply Number");
         }
