@@ -25,7 +25,7 @@ public class AssignmentStatement implements Statement, Node {
         Value convertedValue = convert(environment, variableValue, assignValue);
         environment.setVariableValue(identifier, convertedValue);
 
-        return null;
+        return new ExecuteOut(ExecuteOut.ExecuteStatus.NORMAL);
     }
 
 /*    private Value convert(Value variableValue, Value assign) throws RuntimeEnvironmentException { //TODO tutaj moze byc problem!!

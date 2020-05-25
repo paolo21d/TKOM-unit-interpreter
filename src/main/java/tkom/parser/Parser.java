@@ -77,7 +77,7 @@ public class Parser {
         }
     }
 
-    FunctionDef parseFunctionDef() throws UnexpectedTokenException, InvalidTokenException, IOException {
+    public FunctionDef parseFunctionDef() throws UnexpectedTokenException, InvalidTokenException, IOException {
         FunctionDef functionDef = new FunctionDef();
         getCheckedNextTokenType(TokenType.Function);
         functionDef.setSignature(parseSignature());
@@ -126,7 +126,7 @@ public class Parser {
         return block;
     }
 
-    Statement parseStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
+    public Statement parseStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
         switch (peekToken().getType()) {
             case VariableType:
                 return parseInitStatement();
@@ -257,7 +257,7 @@ public class Parser {
         return statement;
     }
 
-    Statement parseSingleLineOrBlockStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
+    public Statement parseSingleLineOrBlockStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
         if (peekToken().getType().equals(TokenType.BracketOpen)) {
             return parseBlock();
         } else {

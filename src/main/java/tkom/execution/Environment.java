@@ -37,6 +37,10 @@ public class Environment {
         return function;
     }
 
+    public void addFunction(FunctionDef function) {
+        functions.put(function.getIdentifier(), function);
+    }
+
     public void createNewLocalScope() {
         Scope parentScope;
         try {
