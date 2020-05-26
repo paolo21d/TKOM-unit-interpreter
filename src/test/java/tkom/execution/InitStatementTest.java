@@ -27,16 +27,16 @@ public class InitStatementTest extends ExecutionTest {
     public void checkInitUnit() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
         executeStatement("KILO a;");
-        assertUnit(new Unit(0, "KILO", environment.getUnitRatio().getUnitValue("KILO")), ((Unit)environment.getVariableValue("a")));
+        assertUnit(new Unit(0, "KILO", environment.getUnitRatio().getUnitValue("KILO")), ((Unit) environment.getVariableValue("a")));
 
         prepareEnvironment();
         executeStatement("KILO a = 5;");
-        assertUnit(new Unit(5, "KILO", environment.getUnitRatio().getUnitValue("KILO")), ((Unit)environment.getVariableValue("a")));
+        assertUnit(new Unit(5, "KILO", environment.getUnitRatio().getUnitValue("KILO")), ((Unit) environment.getVariableValue("a")));
 
         prepareEnvironment();
         executeStatement("INTEGER i = 5;");
         executeStatement("KILO a = i;");
-        assertUnit(new Unit(5, "KILO", environment.getUnitRatio().getUnitValue("KILO")), ((Unit)environment.getVariableValue("a")));
+        assertUnit(new Unit(5, "KILO", environment.getUnitRatio().getUnitValue("KILO")), ((Unit) environment.getVariableValue("a")));
     }
 
 

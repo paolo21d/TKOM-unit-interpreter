@@ -1,3 +1,5 @@
+package tkom;
+
 import tkom.ast.Program;
 import tkom.data.KeyWords;
 import tkom.data.UnitRatio;

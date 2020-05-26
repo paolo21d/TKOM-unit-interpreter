@@ -53,24 +53,6 @@ public class Environment {
         scopeStack.push(localScope);
     }
 
-/*    public void createNewFunctionScope(FunctionDef function, List<Expression> arguments) throws RuntimeEnvironmentException {
-        Scope functionScope = new Scope(null);
-        if (function.getParameters().size() != arguments.size()) {
-            throw new RuntimeEnvironmentException("Invalid number of function " + function.getIdentifier() + " arguments! "
-                    + "Expected: " + function.getParameters().size()
-                    + " Provided: " + arguments.size());
-        }
-        functionCallingStack.push(function);
-        for(Expression argument: arguments) {
-
-        }
-
-        for(int i=0; i<arguments.size(); i++) {
-            Value argumentValue = arguments.get(i).evaluate(this);
-            Signature functionParameter   = function.getParameters().get(i);
-        }
-    }*/
-
     public void destroyScope() {
         scopeStack.pop();
     }

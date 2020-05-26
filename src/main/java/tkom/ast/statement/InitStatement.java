@@ -45,11 +45,6 @@ public class InitStatement extends Signature implements Statement, Node {
         if (isNumber() && assign instanceof NumberNode) {
             return assign;
         } else if (assign instanceof Unit && environment.isUnitDefined(getType())) {
-/*            double inputUnitValue = ((Unit) assign).getValue();
-            double inputUnitRatio = ((Unit) assign).getRatio();
-            double resultUnitRatio = environment.getUnitRatio().getUnitValue(getType());
-            double resultValue = inputUnitValue * inputUnitRatio / resultUnitRatio;
-            return new Unit(resultValue, getType(), resultUnitRatio);*/
             return environment.castUnitType(((Unit) assign).getUnitType(), getType(), ((Unit) assign).getValue());
         } else if (!isNumber() && assign instanceof NumberNode) {
             return new Unit(((NumberNode) assign).getValue(), getType(), environment.getUnitRatio().getUnitValue(getType()));

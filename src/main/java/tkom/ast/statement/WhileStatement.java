@@ -15,10 +15,10 @@ public class WhileStatement implements Statement, Node {
     public ExecuteOut execute(Environment environment) throws RuntimeEnvironmentException {
         ExecuteOut out = new ExecuteOut(ExecuteOut.ExecuteStatus.NORMAL);
 
-        while(condition.checkIfTrue(environment)) {
+        while (condition.checkIfTrue(environment)) {
             environment.createNewLocalScope();
             out = loopBlock.execute(environment);
-            if(out.isReturnCall()) {
+            if (out.isReturnCall()) {
                 environment.destroyScope();
                 return out;
             }

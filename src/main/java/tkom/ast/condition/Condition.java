@@ -70,7 +70,7 @@ public class Condition implements Node, Expression {
     }
 
     private Value negation(Value value) throws RuntimeEnvironmentException {
-        if(value instanceof NumberNode) {
+        if (value instanceof NumberNode) {
             if (((NumberNode) value).getValue() == 0.0) {
                 return new NumberNode(1.0);
             } else {
@@ -99,13 +99,5 @@ public class Condition implements Node, Expression {
             throw new RuntimeEnvironmentException("Cannot compare objects");
         }
     }
-
-/*    private Value castBooleanToNumberNode(boolean value) {
-        if (value) {
-            return new NumberNode(1.0);
-        } else {
-            return new NumberNode(0.0);
-        }
-    }*/
 
 }

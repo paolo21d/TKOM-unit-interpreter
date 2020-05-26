@@ -20,8 +20,8 @@ public class StringNode implements Expression, Value, Node {
 
     @Override
     public ArithmeticValue isEqual(Value secondOperand) throws RuntimeEnvironmentException {
-        if(secondOperand instanceof StringNode) {
-            double resultValue = value.equals(((StringNode) secondOperand).getValue())? 1: 0;
+        if (secondOperand instanceof StringNode) {
+            double resultValue = value.equals(((StringNode) secondOperand).getValue()) ? 1 : 0;
             return new NumberNode(resultValue);
         } else {
             throw new RuntimeEnvironmentException("Cannot compare to StringNode");

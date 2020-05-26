@@ -14,7 +14,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ReturnStatementTest extends ExecutionTest{
+public class ReturnStatementTest extends ExecutionTest {
 
     @Test
     public void checkReturnNumberNode() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {

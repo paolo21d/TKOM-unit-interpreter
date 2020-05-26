@@ -19,7 +19,7 @@ public class Scope {
     }
 
     public void addNewVariable(String identifier) throws RuntimeEnvironmentException {
-        if(definedVariables.containsKey(identifier)) {
+        if (definedVariables.containsKey(identifier)) {
             throw new RuntimeEnvironmentException("Variable " + identifier + " is already defined.");
         }
         definedVariables.put(identifier, null);

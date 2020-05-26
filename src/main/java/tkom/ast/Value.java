@@ -7,8 +7,6 @@ import tkom.errorHandler.RuntimeEnvironmentException;
 
 public interface Value {
 
-    ArithmeticValue isEqual(Value secondOperand) throws RuntimeEnvironmentException;
-
     static boolean isNumber(Expression value) {
         return value instanceof NumberNode;
     }
@@ -24,4 +22,6 @@ public interface Value {
     static double getUnitValue(Value value) {
         return ((Unit) value).getValue();
     }
+
+    ArithmeticValue isEqual(Value secondOperand) throws RuntimeEnvironmentException;
 }

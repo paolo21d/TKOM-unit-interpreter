@@ -18,13 +18,13 @@ public class Block implements Statement, Node {
 
     @Override
     public ExecuteOut execute(Environment environment) throws RuntimeEnvironmentException {
-        for(Statement statement: statements) {
-            if(statement instanceof ReturnStatement) {
+        for (Statement statement : statements) {
+            if (statement instanceof ReturnStatement) {
                 return statement.execute(environment);
             }
 
             ExecuteOut out = statement.execute(environment);
-            if(out.isReturnCall()) {
+            if (out.isReturnCall()) {
                 return out;
             }
         }
