@@ -32,7 +32,7 @@ public class Main {
         }*/
 
 //        Parser parser = new Parser(new Lexer(new StringReader("function DOUBLE main() { return 0.0; }")));
-        Parser parser = new Parser(new Lexer(new FileReader("src/main/resources/example1.txt")));
+        Parser parser = new Parser(new Lexer(new FileReader("src/main/resources/example2.txt")));
         Program program = parser.parseProgram();
         UnitRatio unitRatio = new UnitRatio();
         runProgram(program, unitRatio);

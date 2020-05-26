@@ -18,16 +18,21 @@ public class Block implements Statement, Node {
 
     @Override
     public ExecuteOut execute(Environment environment) throws RuntimeEnvironmentException {
+        environment.createNewLocalScope();
+        ExecuteOut blockOut = new ExecuteOut(ExecuteOut.ExecuteStatus.NORMAL);
         for (Statement statement : statements) {
             if (statement instanceof ReturnStatement) {
-                return statement.execute(environment);
+                blockOut = statement.execute(environment);
+                break;
             }
 
             ExecuteOut out = statement.execute(environment);
             if (out.isReturnCall()) {
-                return out;
+                blockOut = out;
+                break;
             }
         }
-        return new ExecuteOut(ExecuteOut.ExecuteStatus.NORMAL);
+        environment.destroyScope();
+        return blockOut;
     }
 }

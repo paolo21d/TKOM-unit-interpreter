@@ -61,6 +61,19 @@ public class BlockTest extends ExecutionTest {
         assertReturnNumber(3, out);
     }
 
+    @Test
+    public void checkBlockInBlock() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
+        prepareEnvironment();
+        ExecuteOut out = executeStatement("{DOUBLE a=1; {DOUBLE a = 2;} return a;}");
+        assertReturnNumber(1, out);
+    }
+
+    @Test(expected = RuntimeEnvironmentException.class)
+    public void checkRedeclarationVariableException() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
+        prepareEnvironment();
+        executeStatement("{DOUBLE a=1; DOUBLE a = 2; return a;}");
+    }
+
     private void assertReturnNumber(double expectedNumber, ExecuteOut out) {
         assertEquals(ExecuteOut.ExecuteStatus.RETURN, out.getStatus());
         assertEquals(new NumberNode(expectedNumber), out.getReturnedValue());

@@ -138,6 +138,8 @@ public class Parser {
                 return parseWhileStatement();
             case Return:
                 return parseReturnStatement();
+            case BracketOpen:
+                return parseBlock();
             default:
                 throw new UnexpectedTokenException(
                         peekToken().getLineNumber(),
