@@ -21,6 +21,6 @@ public class Signature {
     }
 
     public boolean isNumber() {
-        return type.toUpperCase().equals("INTEGER") || type.toUpperCase().equals("DOUBLE");
+        return type.toUpperCase().equals("DOUBLE");
     }
 }

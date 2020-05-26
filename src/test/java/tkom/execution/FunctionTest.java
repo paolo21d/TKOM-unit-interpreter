@@ -21,20 +21,20 @@ public class FunctionTest extends ExecutionTest {
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkWrongQuantityArgument() throws RuntimeEnvironmentException, UnexpectedTokenException, InvalidTokenException, IOException {
         prepareEnvironment();
-        addFunction("function INTEGER foo(INTEGER arg1) { return arg1; }");
+        addFunction("function DOUBLE foo(DOUBLE arg1) { return arg1; }");
         executeCallFunction("foo(1, 2);");
     }
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkWrongTypeOfArgument() throws RuntimeEnvironmentException, UnexpectedTokenException, InvalidTokenException, IOException {
         prepareEnvironment();
-        addFunction("function INTEGER foo(INTEGER arg1) { return arg1; }");
+        addFunction("function DOUBLE foo(DOUBLE arg1) { return arg1; }");
         executeStatement("KILO k = 10;");
         executeCallFunction("foo(k);");
 
         prepareEnvironment();
-        addFunction("function INTEGER foo(KILO arg1) { return arg1; }");
-        executeStatement("INTEGER i = 10;");
+        addFunction("function DOUBLE foo(KILO arg1) { return arg1; }");
+        executeStatement("DOUBLE i = 10;");
         executeCallFunction("foo(i);");
     }
 
@@ -48,9 +48,9 @@ public class FunctionTest extends ExecutionTest {
     }
 
     @Test
-    public void checkReturnInteger() throws RuntimeEnvironmentException, UnexpectedTokenException, InvalidTokenException, IOException { //TODO moze ogarnac żeby integer nie przyjmowal ulamkow
+    public void checkReturnDOUBLE() throws RuntimeEnvironmentException, UnexpectedTokenException, InvalidTokenException, IOException { //TODO moze ogarnac żeby DOUBLE nie przyjmowal ulamkow
         prepareEnvironment();
-        addFunction("function INTEGER foo(INTEGER arg1) { return arg1; }");
+        addFunction("function DOUBLE foo(DOUBLE arg1) { return arg1; }");
         ExecuteOut out = executeCallFunction("foo(1);");
         assertFalse(out.isReturnCall());
         assertEquals(new NumberNode(1), out.getReturnedValue());

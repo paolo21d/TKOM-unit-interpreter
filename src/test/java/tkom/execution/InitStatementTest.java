@@ -15,7 +15,7 @@ public class InitStatementTest extends ExecutionTest {
     @Test
     public void checkInitNumber() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
-        executeStatement("INTEGER a;");
+        executeStatement("DOUBLE a;");
         assertEquals(new NumberNode(0), environment.getVariableValue("a"));
 
         prepareEnvironment();
@@ -34,7 +34,7 @@ public class InitStatementTest extends ExecutionTest {
         assertUnit(new Unit(5, "KILO", environment.getUnitRatio().getUnitValue("KILO")), ((Unit) environment.getVariableValue("a")));
 
         prepareEnvironment();
-        executeStatement("INTEGER i = 5;");
+        executeStatement("DOUBLE i = 5;");
         executeStatement("KILO a = i;");
         assertUnit(new Unit(5, "KILO", environment.getUnitRatio().getUnitValue("KILO")), ((Unit) environment.getVariableValue("a")));
     }
@@ -43,7 +43,7 @@ public class InitStatementTest extends ExecutionTest {
 /*    @Test(expected = RuntimeEnvironmentException.class)
     public void checkInitUnitWithNumberException() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
-        executeStatement("INTEGER i = 5;");
+        executeStatement("DOUBLE i = 5;");
         executeStatement("KILO a = i;");
     }*/
 
@@ -51,6 +51,6 @@ public class InitStatementTest extends ExecutionTest {
     public void checkInitNumberWithUnitException() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
         executeStatement("KILO k = 5;");
-        executeStatement("INTEGER i = k;");
+        executeStatement("DOUBLE i = k;");
     }
 }

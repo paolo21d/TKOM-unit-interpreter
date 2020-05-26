@@ -16,7 +16,7 @@ public class AssignmentStatementTest extends ExecutionTest {
     @Test
     public void checkNumberAssignment() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
-        String input = "INTEGER a = 5;";
+        String input = "DOUBLE a = 5;";
         executeStatement(input);
         assertEquals(new NumberNode(5), environment.getVariableValue("a"));
         executeStatement("a=4;");
@@ -46,7 +46,7 @@ public class AssignmentStatementTest extends ExecutionTest {
     @Test(expected = RuntimeEnvironmentException.class)
     public void assignUnitToNumberException() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
-        executeStatement("INTEGER a;");
+        executeStatement("DOUBLE a;");
         executeStatement("KILO k = 5;");
         executeStatement("a = k;");
     }
@@ -55,7 +55,7 @@ public class AssignmentStatementTest extends ExecutionTest {
     public void assignNumberToUnitException() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
         executeStatement("KILO x = 1;");
-        executeStatement("INTEGER y = 5;");
+        executeStatement("DOUBLE y = 5;");
         executeStatement("x = y;");
     }
 

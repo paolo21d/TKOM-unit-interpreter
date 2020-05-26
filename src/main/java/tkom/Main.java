@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) throws IOException, InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException {
         KeyWords.addVariableType("long");
 //        Lexer lexer = new Lexer(new FileReader("src/main/resources/example1.txt"));
-/*        Lexer lexer = new Lexer(new StringReader("function INTEGER main() { return 0.0; }"));
+/*        Lexer lexer = new Lexer(new StringReader("function DOUBLE main() { return 0.0; }"));
         Token token = lexer.readNextToken();
         while (token.getType() != TokenType.EndOfFile) {
             if (token.getType().equals(TokenType.Identifier)) {
@@ -31,7 +31,7 @@ public class Main {
             token = lexer.readNextToken();
         }*/
 
-//        Parser parser = new Parser(new Lexer(new StringReader("function INTEGER main() { return 0.0; }")));
+//        Parser parser = new Parser(new Lexer(new StringReader("function DOUBLE main() { return 0.0; }")));
         Parser parser = new Parser(new Lexer(new FileReader("src/main/resources/example1.txt")));
         Program program = parser.parseProgram();
         UnitRatio unitRatio = new UnitRatio();

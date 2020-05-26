@@ -43,7 +43,7 @@ public class ExecutionTest {
 
     protected Environment prepareEnvironment() throws RuntimeEnvironmentException {
         FunctionDef functionDef = new FunctionDef();
-        functionDef.setSignature(new Signature("INTEGER", "main"));
+        functionDef.setSignature(new Signature("DOUBLE", "main"));
         environment = new Environment(Arrays.asList(functionDef), new UnitRatio());
         environment.createNewLocalScope();
         return environment;

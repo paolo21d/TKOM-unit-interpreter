@@ -32,7 +32,7 @@ public class InitStatement extends Signature implements Statement, Node {
     }
 
     private Value getDefaultValue(Environment environment) throws RuntimeEnvironmentException {
-        if (checkType("INTEGER") || checkType("DOUBLE")) {
+        if (checkType("DOUBLE")) {
             return new NumberNode(0.0);
         } else if (environment.isUnitDefined(getType())) {
             return new Unit(0.0, getType(), environment.getUnitRatio().getUnitValue(getType()));

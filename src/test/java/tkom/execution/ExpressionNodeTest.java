@@ -18,7 +18,7 @@ public class ExpressionNodeTest extends ExecutionTest {
     //ADD
     @Test
     public void checkAddNumberToNumber() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        checkNumberResult("INTEGER a = 10;", "INTEGER b = 5;", "a+b", 15);
+        checkNumberResult("DOUBLE a = 10;", "DOUBLE b = 5;", "a+b", 15);
     }
 
     @Test
@@ -33,18 +33,18 @@ public class ExpressionNodeTest extends ExecutionTest {
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkAddNumberToUnit() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        getExpressionResult("INTEGER a = 10;", "KILO b = 20;", "a+b");
+        getExpressionResult("DOUBLE a = 10;", "KILO b = 20;", "a+b");
     }
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkAddUnitToVariable() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        getExpressionResult("KILO a = 10;", "INTEGER b = 20;", "a+b");
+        getExpressionResult("KILO a = 10;", "DOUBLE b = 20;", "a+b");
     }
 
     //SUBTRACT
     @Test
     public void checkSubtractNumberToNumber() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        checkNumberResult("INTEGER a = 10;", "INTEGER b = 5;", "a-b", 5);
+        checkNumberResult("DOUBLE a = 10;", "DOUBLE b = 5;", "a-b", 5);
     }
 
     @Test
@@ -59,18 +59,18 @@ public class ExpressionNodeTest extends ExecutionTest {
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkSubtractNumberToUnit() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        getExpressionResult("INTEGER a = 10;", "KILO b = 20;", "a-b");
+        getExpressionResult("DOUBLE a = 10;", "KILO b = 20;", "a-b");
     }
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkSubtractUnitToVariable() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        getExpressionResult("KILO a = 10;", "INTEGER b = 20;", "a-b");
+        getExpressionResult("KILO a = 10;", "DOUBLE b = 20;", "a-b");
     }
 
     //MULTIPLY
     @Test
     public void checkMultiplyNumberToNumber() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        checkNumberResult("INTEGER a = 10;", "INTEGER b = 5;", "a*b", 50);
+        checkNumberResult("DOUBLE a = 10;", "DOUBLE b = 5;", "a*b", 50);
     }
 
     @Test
@@ -85,12 +85,12 @@ public class ExpressionNodeTest extends ExecutionTest {
 
     @Test
     public void checkMultiplyNumberToUnit() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        checkUnitResult("INTEGER a = 2;", "KILO b = 1;", "a*b", 2, "KILO");
+        checkUnitResult("DOUBLE a = 2;", "KILO b = 1;", "a*b", 2, "KILO");
     }
 
     @Test
     public void checkMultiplyUnitToVariable() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        checkUnitResult("KILO b = 1;", "INTEGER a = 2;", "a*b", 2, "KILO");
+        checkUnitResult("KILO b = 1;", "DOUBLE a = 2;", "a*b", 2, "KILO");
     }
 
     //DIVIDE
@@ -111,12 +111,12 @@ public class ExpressionNodeTest extends ExecutionTest {
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkDivideNumberToUnit() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        getExpressionResult("INTEGER a = 2;", "KILO b = 1;", "a/b");
+        getExpressionResult("DOUBLE a = 2;", "KILO b = 1;", "a/b");
     }
 
     @Test
     public void checkDivideUnitToVariable() throws InvalidTokenException, UnexpectedTokenException, RuntimeEnvironmentException, IOException {
-        checkUnitResult("KILO a = 10;", "INTEGER b = 2;", "a/b", 5, "KILO");
+        checkUnitResult("KILO a = 10;", "DOUBLE b = 2;", "a/b", 5, "KILO");
     }
 
 

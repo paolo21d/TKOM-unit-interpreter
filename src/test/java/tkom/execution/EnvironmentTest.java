@@ -18,7 +18,7 @@ public class EnvironmentTest {
     @Test
     public void checkGetFunction() throws RuntimeEnvironmentException {
         FunctionDef functionDef = new FunctionDef();
-        functionDef.setSignature(new Signature("INTEGER", "func"));
+        functionDef.setSignature(new Signature("DOUBLE", "func"));
         Environment environment = new Environment(Arrays.asList(functionDef), new UnitRatio());
         assertEquals(functionDef, environment.getFunction("func"));
     }
@@ -81,7 +81,7 @@ public class EnvironmentTest {
 
     private Environment prepareEnvironment() throws RuntimeEnvironmentException {
         FunctionDef functionDef = new FunctionDef();
-        functionDef.setSignature(new Signature("INTEGER", "func"));
+        functionDef.setSignature(new Signature("DOUBLE", "func"));
         return new Environment(Arrays.asList(functionDef), new UnitRatio());
     }
 }

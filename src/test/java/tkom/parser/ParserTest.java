@@ -143,7 +143,7 @@ public class ParserTest {
                 "    }\n" +
                 "}\n" +
                 "\n" +
-                "function INTEGER main() {\n" +
+                "function DOUBLE main() {\n" +
                 "\tKILO smallUnit = 10;\n" +
                 "\tMEGA bigUnit = 1;\n" +
                 "\tKILO result = max(smallUnit, bigUnit);\n" +
@@ -154,18 +154,18 @@ public class ParserTest {
         Program program = parser.parseProgram();
         assertEquals(2, program.getFunctions().size());
         assertFunctionDef(program.getFunctions().get(0), "KILO", "max", Arrays.asList(new Signature("KILO", "unit1"), new Signature("KILO", "unit2")));
-        assertFunctionDef(program.getFunctions().get(1), "INTEGER", "main", new ArrayList<>());
+        assertFunctionDef(program.getFunctions().get(1), "DOUBLE", "main", new ArrayList<>());
     }
 
     @Test
     public void checkParseFunctionDef() throws IOException, InvalidTokenException, UnexpectedTokenException {
         String input1 = "function GIGA func1(){return 0;}" +
-                "function GIGA func2(INTEGER a){return a;}" +
-                "function GIGA func3(INTEGER a, DOUBLE b){return a+b;}";
+                "function GIGA func2(DOUBLE a){return a;}" +
+                "function GIGA func3(DOUBLE a, DOUBLE b){return a+b;}";
         initializeParser(input1);
         assertFunctionDef(parser.parseFunctionDef(), "GIGA", "func1", new ArrayList<Signature>());
-        assertFunctionDef(parser.parseFunctionDef(), "GIGA", "func2", Arrays.asList(new Signature("INTEGER", "a")));
-        assertFunctionDef(parser.parseFunctionDef(), "GIGA", "func3", Arrays.asList(new Signature("INTEGER", "a"), new Signature("DOUBLE", "b")));
+        assertFunctionDef(parser.parseFunctionDef(), "GIGA", "func2", Arrays.asList(new Signature("DOUBLE", "a")));
+        assertFunctionDef(parser.parseFunctionDef(), "GIGA", "func3", Arrays.asList(new Signature("DOUBLE", "a"), new Signature("DOUBLE", "b")));
     }
 
     @Test
@@ -186,23 +186,23 @@ public class ParserTest {
 
     @Test
     public void checkParseParameters() throws IOException, InvalidTokenException, UnexpectedTokenException {
-        String input = "() (integer a) (integer a, integer b) (integer a, integer b, integer c)";
+        String input = "() (DOUBLE a) (DOUBLE a, DOUBLE b) (DOUBLE a, DOUBLE b, DOUBLE c)";
         initializeParser(input);
         assertEquals(new ArrayList<Signature>(),
                 parser.parseParameters());
-        assertEquals(Arrays.asList(new Signature("integer", "a")),
+        assertEquals(Arrays.asList(new Signature("DOUBLE", "a")),
                 parser.parseParameters());
-        assertEquals(Arrays.asList(new Signature("integer", "a"), new Signature("integer", "b")),
+        assertEquals(Arrays.asList(new Signature("DOUBLE", "a"), new Signature("DOUBLE", "b")),
                 parser.parseParameters());
-        assertEquals(Arrays.asList(new Signature("integer", "a"), new Signature("integer", "b"), new Signature("integer", "c")),
+        assertEquals(Arrays.asList(new Signature("DOUBLE", "a"), new Signature("DOUBLE", "b"), new Signature("DOUBLE", "c")),
                 parser.parseParameters());
     }
 
     @Test()
     public void checkParseParametersException() {
         assertExceptionParameters("aaa", "Passed parameters without open parent at begin");
-        assertExceptionParameters("(integer )", "Passed parameters without variable name");
-        assertExceptionParameters("(integer a, )", "Passed parameters with missing variable declaration");
+        assertExceptionParameters("(DOUBLE )", "Passed parameters without variable name");
+        assertExceptionParameters("(DOUBLE a, )", "Passed parameters with missing variable declaration");
     }
 
     @Test
@@ -210,7 +210,7 @@ public class ParserTest {
         initializeParser("{}");
         assertEquals(0, parser.parseBlock().getStatements().size());
 
-        initializeParser("{integer a;return a;}");
+        initializeParser("{DOUBLE a;return a;}");
         assertEquals(2, parser.parseBlock().getStatements().size());
     }
 
@@ -235,7 +235,7 @@ public class ParserTest {
 
     @Test
     public void checkParseStatement() throws UnexpectedTokenException, InvalidTokenException, IOException {
-        initializeParser("integer a;");
+        initializeParser("DOUBLE a;");
         assertTrue(parser.parseStatement() instanceof InitStatement);
 
         initializeParser("a = 10;");
@@ -256,15 +256,15 @@ public class ParserTest {
 
     @Test
     public void checkParseInitStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
-        initializeParser("integer a = 1;");
+        initializeParser("DOUBLE a = 1;");
         InitStatement statement = (InitStatement) parser.parseInitStatement();
-        assertEquals("integer", statement.getType());
+        assertEquals("DOUBLE", statement.getType());
         assertEquals("a", statement.getIdentifier());
         assertNotNull(statement.getAssignable());
 
-        assertExceptionInitStatement("integer a", "Missing assignment character");
-        assertExceptionInitStatement("integer a = 1", "Missing semicolon");
-        assertExceptionInitStatement("integer a = ;", "Missing expression");
+        assertExceptionInitStatement("DOUBLE a", "Missing assignment character");
+        assertExceptionInitStatement("DOUBLE a = 1", "Missing semicolon");
+        assertExceptionInitStatement("DOUBLE a = ;", "Missing expression");
     }
 
     @Test

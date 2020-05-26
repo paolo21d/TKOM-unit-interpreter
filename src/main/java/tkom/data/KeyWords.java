@@ -50,7 +50,6 @@ public class KeyWords {
         variableTypes.put("centy", TokenType.VariableType);
         variableTypes.put("mega", TokenType.VariableType);
         variableTypes.put("giga", TokenType.VariableType);
-        variableTypes.put("integer", TokenType.VariableType);
         variableTypes.put("double", TokenType.VariableType);
 
     }

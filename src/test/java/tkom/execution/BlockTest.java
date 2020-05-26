@@ -31,7 +31,7 @@ public class BlockTest extends ExecutionTest {
         assertReturnNumber(0, out);
 
         prepareEnvironment();
-        out = executeStatement("{INTEGER a = 1; return a;}");
+        out = executeStatement("{DOUBLE a = 1; return a;}");
         assertReturnNumber(1, out);
 
         prepareEnvironment();
@@ -57,7 +57,7 @@ public class BlockTest extends ExecutionTest {
     @Test
     public void checkExpressionEvaluateInReturn() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
-        ExecuteOut out = executeStatement("{INTEGER a = 1; INTEGER b = 2; return a+b;}");
+        ExecuteOut out = executeStatement("{DOUBLE a = 1; DOUBLE b = 2; return a+b;}");
         assertReturnNumber(3, out);
     }
 

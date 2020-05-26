@@ -24,7 +24,7 @@ public class ConditionTest extends ExecutionTest {
     @Test
     public void checkTrueNegation() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
-        executeStatement("INTEGER a = 1;");
+        executeStatement("DOUBLE a = 1;");
         Value result = evaluateCondition("!a");
         assertFalseConditionResult(result);
     }
@@ -32,7 +32,7 @@ public class ConditionTest extends ExecutionTest {
     @Test
     public void checkFalseNegation() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
         prepareEnvironment();
-        executeStatement("INTEGER a = 0;");
+        executeStatement("DOUBLE a = 0;");
         Value result = evaluateCondition("!a");
         assertTrueConditionResult(result);
     }
@@ -53,8 +53,8 @@ public class ConditionTest extends ExecutionTest {
 
     //EQUALITY
     @Test
-    public void checkEqualityIntegerToInteger() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
-        checkRelation("INTEGER a = 1;", "INTEGER b = 1;", "a == b");
+    public void checkEqualityDOUBLEToDOUBLE() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
+        checkRelation("DOUBLE a = 1;", "DOUBLE b = 1;", "a == b");
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ConditionTest extends ExecutionTest {
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkEqualityUnitToNumber() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
-        checkRelation("KILO a = 1000;", "INTEGER b = 1;", " a == b");
+        checkRelation("KILO a = 1000;", "DOUBLE b = 1;", " a == b");
     }
 
     //LESS
@@ -95,7 +95,7 @@ public class ConditionTest extends ExecutionTest {
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkLessUnitToNumber() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
-        checkRelation("KILO a = 1000;", "INTEGER b = 1;", "a < b");
+        checkRelation("KILO a = 1000;", "DOUBLE b = 1;", "a < b");
     }
 
     //LESS OR EQUAL
@@ -116,7 +116,7 @@ public class ConditionTest extends ExecutionTest {
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkLessOrEqualUnitToNumber() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
-        checkRelation("KILO a = 1000;", "INTEGER b = 1;", "a <= b");
+        checkRelation("KILO a = 1000;", "DOUBLE b = 1;", "a <= b");
     }
 
     //GREATER
@@ -137,7 +137,7 @@ public class ConditionTest extends ExecutionTest {
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkGreaterUnitToNumber() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
-        checkRelation("KILO a = 1000;", "INTEGER b = 1;", "a > b");
+        checkRelation("KILO a = 1000;", "DOUBLE b = 1;", "a > b");
     }
 
     //GREATER OR EQUAL
@@ -158,7 +158,7 @@ public class ConditionTest extends ExecutionTest {
 
     @Test(expected = RuntimeEnvironmentException.class)
     public void checkGreaterOrEqualUnitToNumber() throws RuntimeEnvironmentException, IOException, InvalidTokenException, UnexpectedTokenException {
-        checkRelation("KILO a = 1000;", "INTEGER b = 1;", "a >= b");
+        checkRelation("KILO a = 1000;", "DOUBLE b = 1;", "a >= b");
     }
 
     //AND

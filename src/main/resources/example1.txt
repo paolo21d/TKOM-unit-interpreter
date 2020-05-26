@@ -6,12 +6,12 @@ function KILO max(KILO unit1, KILO unit2) {
     }
 }
 
-function INTEGER main() {
+function DOUBLE main() {
 	KILO smallUnit = 10;
 	MEGA bigUnit = 1;
 	KILO result = max(smallUnit, bigUnit);
 	print(result);
 	print("TEST OUT");
-	INTEGER variable = 10;
+	DOUBLE variable = 10;
 	return 0;
 }
