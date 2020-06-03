@@ -15,4 +15,12 @@ public class Signature {
         this.type = signature.getType();
         this.identifier = signature.getIdentifier();
     }
+
+    public boolean checkType(String checkingType) {
+        return type.toUpperCase().equals(checkingType.toUpperCase());
+    }
+
+    public boolean isNumber() {
+        return type.toUpperCase().equals("DOUBLE");
+    }
 }
