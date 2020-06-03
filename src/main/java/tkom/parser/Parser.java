@@ -77,7 +77,7 @@ public class Parser {
         }
     }
 
-    FunctionDef parseFunctionDef() throws UnexpectedTokenException, InvalidTokenException, IOException {
+    public FunctionDef parseFunctionDef() throws UnexpectedTokenException, InvalidTokenException, IOException {
         FunctionDef functionDef = new FunctionDef();
         getCheckedNextTokenType(TokenType.Function);
         functionDef.setSignature(parseSignature());
@@ -126,7 +126,7 @@ public class Parser {
         return block;
     }
 
-    Statement parseStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
+    public Statement parseStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
         switch (peekToken().getType()) {
             case VariableType:
                 return parseInitStatement();
@@ -138,6 +138,8 @@ public class Parser {
                 return parseWhileStatement();
             case Return:
                 return parseReturnStatement();
+            case BracketOpen:
+                return parseBlock();
             default:
                 throw new UnexpectedTokenException(
                         peekToken().getLineNumber(),
@@ -257,7 +259,7 @@ public class Parser {
         return statement;
     }
 
-    Statement parseSingleLineOrBlockStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
+    public Statement parseSingleLineOrBlockStatement() throws IOException, InvalidTokenException, UnexpectedTokenException {
         if (peekToken().getType().equals(TokenType.BracketOpen)) {
             return parseBlock();
         } else {
@@ -273,7 +275,7 @@ public class Parser {
         return statement;
     }
 
-    Condition parseCondition() throws IOException, InvalidTokenException, UnexpectedTokenException {
+    public Condition parseCondition() throws IOException, InvalidTokenException, UnexpectedTokenException {
         Condition condition = new Condition();
         condition.addOperand(parseAndCondition());
 
@@ -335,7 +337,7 @@ public class Parser {
         return condition;
     }
 
-    ExpressionNode parseExpression() throws IOException, InvalidTokenException, UnexpectedTokenException {
+    public ExpressionNode parseExpression() throws IOException, InvalidTokenException, UnexpectedTokenException {
         ExpressionNode expression = new ExpressionNode();
         expression.addOperand(parseMultiplicativeExpression());
 
